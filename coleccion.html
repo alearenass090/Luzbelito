@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<!-- saved from url=(0049)file:///C:/Users/alear/Downloads/coleccion_1.html -->
+<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LUZBELITO — Elegí tu banda</title>
+<link href="./coleccion_files/css2" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --cream: #f5f0e8;
+  --cream2: #ede7d9;
+  --bordo: #6b1a2a;
+  --bordo2: #8b2035;
+  --text: #1a1410;
+  --text-muted: rgba(26,20,16,0.5);
+  --text-dim: rgba(26,20,16,0.28);
+  --border: rgba(26,20,16,0.1);
+  --border-strong: rgba(26,20,16,0.2);
+  --serif: 'Playfair Display', Georgia, serif;
+  --sans: 'Jost', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--cream);
+  color: var(--text);
+  font-family: var(--sans);
+  font-weight: 300;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(118deg, transparent, transparent 40px, rgba(107,26,42,0.015) 40px, rgba(107,26,42,0.015) 41px),
+    repeating-linear-gradient(62deg, transparent, transparent 80px, rgba(26,20,16,0.012) 80px, rgba(26,20,16,0.012) 81px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* TICKER */
+.ticker-wrap {
+  background: var(--bordo);
+  padding: 9px 0;
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  z-index: 10;
+}
+.ticker {
+  display: inline-flex;
+  animation: ticker 20s linear infinite;
+}
+.ticker span {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--cream);
+  padding: 0 2rem;
+}
+.ticker span::after {
+  content: '✦';
+  margin-left: 2rem;
+  opacity: 0.45;
+}
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* NAV */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 48px;
+  background: rgba(245,240,232,0.97);
+  border-bottom: 0.5px solid var(--border);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.nav-logo {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--text);
+}
+.nav-logo em { color: var(--bordo); font-style: italic; }
+.nav-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+.nav-links a {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  transition: color 0.2s;
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -3px; left: 0; right: 0;
+  height: 0.5px;
+  background: var(--bordo);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s;
+}
+.nav-links a:hover { color: var(--bordo); }
+.nav-links a:hover::after { transform: scaleX(1); }
+.nav-actions { display: flex; gap: 16px; align-items: center; }
+.nav-cart {
+  border: 0.5px solid var(--border-strong);
+  padding: 8px 18px;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  cursor: pointer;
+  background: none;
+  transition: all 0.2s;
+  font-family: var(--sans);
+}
+.nav-cart:hover { color: var(--bordo); border-color: var(--bordo); }
+
+/* HAMBURGER */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 4px;
+}
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: var(--text);
+  transition: all 0.3s;
+}
+.hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(4px, 4px); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(4px, -4px); }
+
+/* MOBILE MENU */
+.mobile-menu {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: var(--cream);
+  z-index: 99;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 36px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.mobile-menu.open { display: flex; opacity: 1; }
+.mobile-menu a {
+  font-family: var(--serif);
+  font-size: 32px;
+  font-weight: 400;
+  color: var(--text);
+  letter-spacing: 0.05em;
+  transition: color 0.2s;
+}
+.mobile-menu a:hover { color: var(--bordo); }
+.mobile-menu-slogan {
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-top: 20px;
+}
+
+/* PAGE WRAPPER */
+.page { position: relative; z-index: 1; }
+
+/* ===== BANDA SELECTOR VIEW ===== */
+#view-bandas {
+  padding: 60px 48px 80px;
+}
+
+.view-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+.view-eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--bordo);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+.view-eyebrow::before,
+.view-eyebrow::after {
+  content: '';
+  width: 28px;
+  height: 0.5px;
+  background: var(--bordo);
+}
+.view-title {
+  font-family: var(--serif);
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.1;
+}
+.view-title em { color: var(--bordo); font-style: italic; }
+.view-subtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 12px;
+  letter-spacing: 0.04em;
+}
+
+/* BANDS GRID */
+.bands-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 36px 24px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.band-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+.band-item:hover { transform: translateY(-6px); }
+
+.band-circle {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: var(--cream2);
+  border: 1.5px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  position: relative;
+}
+.band-item:hover .band-circle {
+  border-color: var(--bordo);
+  box-shadow: 0 8px 32px rgba(107,26,42,0.18);
+}
+.band-circle img {
+  width: 82%;
+  height: 82%;
+  object-fit: contain;
+  transition: transform 0.3s;
+}
+.band-item:hover .band-circle img { transform: scale(1.07); }
+
+.band-circle-overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(107,26,42,0);
+  transition: background 0.3s;
+}
+.band-item:hover .band-circle-overlay {
+  background: rgba(107,26,42,0.06);
+}
+
+.band-name {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text);
+  text-align: center;
+  transition: color 0.2s;
+  line-height: 1.4;
+}
+.band-item:hover .band-name { color: var(--bordo); }
+
+/* ===== PRODUCTOS VIEW ===== */
+#view-productos {
+  display: none;
+  padding: 40px 48px 80px;
+}
+
+.productos-header {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 48px;
+  padding-bottom: 24px;
+  border-bottom: 0.5px solid var(--border);
+}
+.btn-volver {
+  background: none;
+  border: 0.5px solid var(--border-strong);
+  color: var(--text-muted);
+  padding: 10px 20px;
+  font-family: var(--sans);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.btn-volver:hover { color: var(--bordo); border-color: var(--bordo); }
+.btn-volver::before { content: '←'; font-size: 14px; }
+
+.banda-activa-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.banda-activa-logo {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--cream2);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.banda-activa-logo img {
+  width: 78%;
+  height: 78%;
+  object-fit: contain;
+}
+.banda-activa-nombre {
+  font-family: var(--serif);
+  font-size: clamp(20px, 3vw, 32px);
+  font-weight: 400;
+  color: var(--text);
+}
+.banda-activa-nombre em { color: var(--bordo); font-style: italic; }
+.banda-activa-count {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* PRODUCTS GRID */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.product-card {
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+.product-card:hover { transform: translateY(-4px); }
+
+.product-img {
+  background: var(--cream2);
+  aspect-ratio: 3/4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  border: 0.5px solid var(--border);
+  margin-bottom: 16px;
+}
+.product-img-placeholder {
+  font-family: var(--serif);
+  font-size: 48px;
+  font-weight: 700;
+  font-style: italic;
+  color: rgba(107,26,42,0.1);
+  user-select: none;
+}
+.product-tag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: var(--bordo);
+  color: var(--cream);
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 5px 10px;
+  font-weight: 500;
+}
+.product-tag.limited { background: var(--text); }
+.product-hover-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(26,20,16,0);
+  transition: background 0.3s;
+  display: flex;
+  align-items: flex-end;
+  padding: 16px;
+}
+.product-card:hover .product-hover-overlay { background: rgba(26,20,16,0.06); }
+.product-hover-btn {
+  background: var(--bordo);
+  color: var(--cream);
+  width: 100%;
+  padding: 12px;
+  font-family: var(--sans);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-align: center;
+  font-weight: 500;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.25s, transform 0.25s;
+}
+.product-card:hover .product-hover-btn { opacity: 1; transform: translateY(0); }
+
+.product-info { padding: 0 2px; }
+.product-banda {
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--bordo);
+  margin-bottom: 4px;
+}
+.product-name {
+  font-family: var(--serif);
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+.product-price {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  letter-spacing: 0.04em;
+}
+.product-sizes {
+  font-size: 10px;
+  color: var(--text-dim);
+  letter-spacing: 0.1em;
+  margin-top: 4px;
+  text-transform: uppercase;
+}
+
+/* EMPTY STATE */
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 80px 0;
+}
+.empty-state-icon {
+  font-family: var(--serif);
+  font-size: 64px;
+  font-style: italic;
+  color: rgba(107,26,42,0.1);
+  margin-bottom: 20px;
+}
+.empty-state-text {
+  font-size: 13px;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  nav { padding: 14px 24px; }
+  .nav-links, .nav-actions { display: none; }
+  .hamburger { display: flex; }
+  #view-bandas, #view-productos { padding: 40px 24px 60px; }
+  .bands-grid { grid-template-columns: repeat(3, 1fr); gap: 28px 16px; }
+  .band-circle { width: 100px; height: 100px; }
+  .products-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+}
+
+@media (max-width: 480px) {
+  .bands-grid { grid-template-columns: repeat(2, 1fr); }
+  .band-circle { width: 120px; height: 120px; }
+  .products-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .productos-header { flex-wrap: wrap; gap: 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="file:///C:/Users/alear/Downloads/luzbelito.html" onclick="closeMobileMenu()">Inicio</a>
+  <a href="file:///C:/Users/alear/Downloads/coleccion.html" onclick="closeMobileMenu()">Colección</a>
+  <a href="file:///C:/Users/alear/Downloads/coleccion_1.html#" onclick="closeMobileMenu()">Nosotros</a>
+  <a href="file:///C:/Users/alear/Downloads/coleccion_1.html#" onclick="closeMobileMenu()">Contacto</a>
+  <div class="mobile-menu-slogan">Solos y de noche</div>
+</div>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span>Envío gratis desde $90.000</span>
+    <span>3 cuotas sin interés</span>
+    <span>Envío gratis desde $90.000</span>
+    <span>3 cuotas sin interés</span>
+    <span>Envío gratis desde $90.000</span>
+    <span>3 cuotas sin interés</span>
+    <span>Envío gratis desde $90.000</span>
+    <span>3 cuotas sin interés</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="file:///C:/Users/alear/Downloads/luzbelito.html" class="nav-logo">LUZBELIT<em>O</em></a>
+  <ul class="nav-links">
+    <li><a href="file:///C:/Users/alear/Downloads/luzbelito.html">Inicio</a></li>
+    <li><a href="file:///C:/Users/alear/Downloads/coleccion.html" style="color:var(--bordo)">Colección</a></li>
+    <li><a href="file:///C:/Users/alear/Downloads/coleccion_1.html#">Nosotros</a></li>
+    <li><a href="file:///C:/Users/alear/Downloads/coleccion_1.html#">Contacto</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="nav-cart">Carrito — 0</button>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="Menú" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="page">
+
+  <!-- ===== VIEW: ELEGÍ TU BANDA ===== -->
+  <div id="view-bandas">
+    <div class="view-header">
+      <div class="view-eyebrow">Rock Nacional</div>
+      <h1 class="view-title">Elegí tu <em>banda</em></h1>
+      <p class="view-subtitle">Seleccioná una banda y explorá todas las remeras disponibles</p>
+    </div>
+
+    <div class="bands-grid">
+
+      <div class="band-item" onclick="verBanda(&#39;redondos&#39;)">
+        <div class="band-circle">
+          <img src="file:///C:/Users/alear/Downloads/Logos/redondos.png" alt="Los Redondos">
+          <div class="band-circle-overlay"></div>
+        </div>
+        <div class="band-name">Patricio Rey<br>y los Redondos</div>
+      </div>
+
+      <div class="band-item" onclick="verBanda(&#39;soda&#39;)">
+        <div class="band-circle">
+          <img src="file:///C:/Users/alear/Downloads/Logos/soda.png" alt="Soda Stereo">
+          <div class="band-circle-overlay"></div>
+        </div>
+        <div class="band-name">Soda Stereo</div>
+      </div>
+
+      <div class="band-item" onclick="verBanda(&#39;babasonicos&#39;)">
+        <div class="band-circle">
+          <img src="file:///C:/Users/alear/Downloads/Logos/babasonicos.jpg" alt="Babasónicos">
+          <div class="band-circle-overlay"></div>
+        </div>
+        <div class="band-name">Babasónicos</div>
+      </div>
+
+      <div class="band-item" onclick="verBanda(&#39;airbag&#39;)">
+        <div class="band-circle" style="background:#111;">
+          <img src="file:///C:/Users/alear/Downloads/Logos/airbag.png" alt="Airbag">
+          <div class="band-circle-overlay"></div>
+        </div>
+        <div class="band-name">Airbag</div>
+      </div>
+
+      <div class="band-item" onclick="verBanda(&#39;callejeros&#39;)">
+        <div class="band-circle" style="background:#111;">
+          <img src="file:///C:/Users/alear/Downloads/Logos/cjs.png" alt="Callejeros">
+          <div class="band-circle-overlay"></div>
+        </div>
+        <div class="band-name">Callejeros</div>
+      </div>
+
+      <div class="band-item" onclick="verBanda(&#39;pastillas&#39;)">
+        <div class="band-circle">
+          <img src="file:///C:/Users/alear/Downloads/Logos/lpda.png" alt="Las Pastillas del Abuelo">
+          <div class="band-circle-overlay"></div>
+        </div>
+        <div class="band-name">Las Pastillas<br>del Abuelo</div>
+      </div>
+
+      <div class="band-item" onclick="verBanda(&#39;charly&#39;)">
+        <div class="band-circle" style="background:#111;">
+          <img src="file:///C:/Users/alear/Downloads/Logos/charly.png" alt="Charly García">
+          <div class="band-circle-overlay"></div>
+        </div>
+        <div class="band-name">Charly García</div>
+      </div>
+
+      <div class="band-item" onclick="verBanda(&#39;piojos&#39;)">
+        <div class="band-circle">
+          <img src="file:///C:/Users/alear/Downloads/Logos/piojos.jpg" alt="Los Piojos">
+          <div class="band-circle-overlay"></div>
+        </div>
+        <div class="band-name">Los Piojos</div>
+      </div>
+
+      <div class="band-item" onclick="verBanda(&#39;renga&#39;)">
+        <div class="band-circle">
+          <img src="file:///C:/Users/alear/Downloads/Logos/renga.jpg" alt="La Renga">
+          <div class="band-circle-overlay"></div>
+        </div>
+        <div class="band-name">La Renga</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== VIEW: PRODUCTOS ===== -->
+  <div id="view-productos">
+    <div class="productos-header">
+      <button class="btn-volver" onclick="volverBandas()">Todas las bandas</button>
+      <div class="banda-activa-info">
+        <div class="banda-activa-logo">
+          <img id="banda-logo-activa" src="file:///C:/Users/alear/Downloads/coleccion_1.html" alt="">
+        </div>
+        <div>
+          <div class="banda-activa-nombre" id="banda-nombre-activa"></div>
+          <div class="banda-activa-count" id="banda-count-activa"></div>
+        </div>
+      </div>
+    </div>
+    <div class="products-grid" id="products-grid"></div>
+  </div>
+
+</div>
+
+<script>
+
+// ---- DATA ----
+const bandas = {
+  redondos: {
+    nombre: 'Patricio Rey y los Redondos',
+    logo: 'Logos/redondos.png',
+    bgCircle: ''
+  },
+  soda: {
+    nombre: 'Soda Stereo',
+    logo: 'Logos/soda.png',
+    bgCircle: ''
+  },
+  babasonicos: {
+    nombre: 'Babasónicos',
+    logo: 'Logos/babasonicos.jpg',
+    bgCircle: ''
+  },
+  airbag: {
+    nombre: 'Airbag',
+    logo: 'Logos/airbag.png',
+    bgCircle: '#111'
+  },
+  callejeros: {
+    nombre: 'Callejeros',
+    logo: 'Logos/cjs.png',
+    bgCircle: '#111'
+  },
+  pastillas: {
+    nombre: 'Las Pastillas del Abuelo',
+    logo: 'Logos/lpda.png',
+    bgCircle: ''
+  },
+  charly: {
+    nombre: 'Charly García',
+    logo: 'Logos/charly.png',
+    bgCircle: '#111'
+  },
+  piojos: {
+    nombre: 'Los Piojos',
+    logo: 'Logos/piojos.jpg',
+    bgCircle: ''
+  },
+  renga: {
+    nombre: 'La Renga',
+    logo: 'Logos/renga.jpg',
+    bgCircle: ''
+  }
+};
+
+// Productos de ejemplo — reemplazá con los reales cuando los tengas
+const productos = [
+  { id: 1, banda: 'redondos', nombre: 'Oktubre', precio: '$28.000', tag: 'Nuevo', sizes: 'S / M / L / XL' },
+  { id: 2, banda: 'redondos', nombre: 'Un baión para el ojo idiota', precio: '$28.000', tag: '', sizes: 'M / L / XL' },
+  { id: 3, banda: 'redondos', nombre: 'La Mosca y la Sopa', precio: '$28.000', tag: 'Último stock', sizes: 'S / M' },
+  { id: 4, banda: 'soda', nombre: 'Dynamo', precio: '$28.000', tag: 'Nuevo', sizes: 'S / M / L / XL' },
+  { id: 5, banda: 'soda', nombre: 'Nada Personal', precio: '$28.000', tag: '', sizes: 'M / L' },
+  { id: 6, banda: 'soda', nombre: 'Me Verás Volver', precio: '$32.000', tag: 'Edición Limitada', sizes: 'S / M / L / XL' },
+  { id: 7, banda: 'babasonicos', nombre: 'Miami', precio: '$28.000', tag: 'Nuevo', sizes: 'S / M / L / XL' },
+  { id: 8, banda: 'babasonicos', nombre: 'Jessico', precio: '$28.000', tag: '', sizes: 'M / L / XL' },
+  { id: 11, banda: 'airbag', nombre: 'Doce Pasos', precio: '$28.000', tag: 'Nuevo', sizes: 'S / M / L / XL' },
+  { id: 12, banda: 'airbag', nombre: 'Por Mil Noches', precio: '$28.000', tag: '', sizes: 'M / L / XL' },
+  { id: 13, banda: 'callejeros', nombre: 'Rocanroles sin Destino', precio: '$28.000', tag: 'Nuevo', sizes: 'S / M / L' },
+  { id: 14, banda: 'callejeros', nombre: 'Señales', precio: '$28.000', tag: '', sizes: 'M / L / XL' },
+  { id: 15, banda: 'pastillas', nombre: 'El Milagro', precio: '$28.000', tag: 'Nuevo', sizes: 'S / M / L / XL' },
+  { id: 16, banda: 'charly', nombre: 'Clics Modernos', precio: '$28.000', tag: 'Nuevo', sizes: 'S / M / L / XL' },
+  { id: 17, banda: 'charly', nombre: 'La Máquina de Hacer Pájaros', precio: '$30.000', tag: 'Edición Limitada', sizes: 'M / L' },
+  { id: 18, banda: 'piojos', nombre: 'Ay Ay Ay', precio: '$28.000', tag: 'Nuevo', sizes: 'S / M / L / XL' },
+  { id: 19, banda: 'piojos', nombre: 'Trúkkkos', precio: '$28.000', tag: '', sizes: 'M / L / XL' },
+  { id: 20, banda: 'renga', nombre: 'Bailando en una Pata', precio: '$28.000', tag: 'Nuevo', sizes: 'S / M / L / XL' },
+  { id: 21, banda: 'renga', nombre: 'El Revelde', precio: '$28.000', tag: '', sizes: 'M / L / XL' },
+];
+
+// ---- FUNCIONES ----
+function verBanda(bandaId) {
+  const banda = bandas[bandaId];
+  const prods = productos.filter(p => p.banda === bandaId);
+
+  // Actualizar header
+  document.getElementById('banda-logo-activa').src = banda.logo;
+  document.getElementById('banda-nombre-activa').innerHTML = banda.nombre;
+  document.getElementById('banda-count-activa').textContent =
+    prods.length > 0 ? prods.length + ' remeras disponibles' : 'Próximamente';
+
+  // Renderizar productos
+  const grid = document.getElementById('products-grid');
+  if (prods.length === 0) {
+    grid.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state-icon">♩</div>
+        <div class="empty-state-text">Próximamente — estamos trabajando en esta colección</div>
+      </div>`;
+  } else {
+    grid.innerHTML = prods.map(p => `
+      <div class="product-card">
+        <div class="product-img">
+          <div class="product-img-placeholder">L</div>
+          ${p.tag ? `<div class="product-tag ${p.tag === 'Edición Limitada' ? 'limited' : ''}">${p.tag}</div>` : ''}
+          <div class="product-hover-overlay">
+            <div class="product-hover-btn">Agregar al carrito</div>
+          </div>
+        </div>
+        <div class="product-info">
+          <div class="product-banda">${banda.nombre}</div>
+          <div class="product-name">${p.nombre}</div>
+          <div class="product-price">${p.precio}</div>
+          <div class="product-sizes">Talles: ${p.sizes}</div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // Cambiar vista
+  document.getElementById('view-bandas').style.display = 'none';
+  document.getElementById('view-productos').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function volverBandas() {
+  document.getElementById('view-productos').style.display = 'none';
+  document.getElementById('view-bandas').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Si venimos con ?banda=xxx en la URL, abrir directo
+window.addEventListener('DOMContentLoaded', () => {
+  const params = new URLSearchParams(window.location.search);
+  const banda = params.get('banda');
+  if (banda && bandas[banda]) {
+    verBanda(banda);
+  }
+});
+
+// Mobile menu
+function toggleMenu() {
+  const menu = document.getElementById('mobileMenu');
+  const ham = document.getElementById('hamburger');
+  menu.classList.toggle('open');
+  ham.classList.toggle('open');
+  document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+}
+function closeMobileMenu() {
+  const menu = document.getElementById('mobileMenu');
+  const ham = document.getElementById('hamburger');
+  menu.classList.remove('open');
+  ham.classList.remove('open');
+  document.body.style.overflow = '';
+}
+</script>
+
+
+</body></html>
