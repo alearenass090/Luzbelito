@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LUZBELITO — Nosotros</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --cream: #f5f0e8;
+  --cream2: #ede7d9;
+  --bordo: #6b1a2a;
+  --bordo2: #8b2035;
+  --text: #1a1410;
+  --text-muted: rgba(26,20,16,0.5);
+  --text-dim: rgba(26,20,16,0.28);
+  --border: rgba(26,20,16,0.1);
+  --border-strong: rgba(26,20,16,0.2);
+  --serif: 'Playfair Display', Georgia, serif;
+  --sans: 'Jost', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--cream);
+  color: var(--text);
+  font-family: var(--sans);
+  font-weight: 300;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(118deg, transparent, transparent 40px, rgba(107,26,42,0.015) 40px, rgba(107,26,42,0.015) 41px),
+    repeating-linear-gradient(62deg, transparent, transparent 80px, rgba(26,20,16,0.012) 80px, rgba(26,20,16,0.012) 81px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* TICKER */
+.ticker-wrap {
+  background: var(--bordo);
+  padding: 9px 0;
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  z-index: 10;
+}
+.ticker {
+  display: inline-flex;
+  animation: ticker 20s linear infinite;
+}
+.ticker span {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--cream);
+  padding: 0 2rem;
+}
+.ticker span::after {
+  content: '✦';
+  margin-left: 2rem;
+  opacity: 0.45;
+}
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* NAV */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 48px;
+  background: rgba(245,240,232,0.97);
+  border-bottom: 0.5px solid var(--border);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.nav-logo {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--text);
+}
+.nav-logo em { color: var(--bordo); font-style: italic; }
+.nav-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+.nav-links a {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  transition: color 0.2s;
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -3px; left: 0; right: 0;
+  height: 0.5px;
+  background: var(--bordo);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s;
+}
+.nav-links a:hover { color: var(--bordo); }
+.nav-links a:hover::after { transform: scaleX(1); }
+.nav-actions { display: flex; gap: 16px; align-items: center; }
+.nav-cart {
+  border: 0.5px solid var(--border-strong);
+  padding: 8px 18px;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  cursor: pointer;
+  background: none;
+  transition: all 0.2s;
+  font-family: var(--sans);
+}
+.nav-cart:hover { color: var(--bordo); border-color: var(--bordo); }
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 4px;
+}
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: var(--text);
+  transition: all 0.3s;
+}
+.hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(4px, 4px); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(4px, -4px); }
+
+.mobile-menu {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: var(--cream);
+  z-index: 99;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 36px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.mobile-menu.open { display: flex; opacity: 1; }
+.mobile-menu a {
+  font-family: var(--serif);
+  font-size: 32px;
+  font-weight: 400;
+  color: var(--text);
+  letter-spacing: 0.05em;
+  transition: color 0.2s;
+}
+.mobile-menu a:hover { color: var(--bordo); }
+.mobile-menu-slogan {
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-top: 20px;
+}
+
+/* PAGE */
+.page { position: relative; z-index: 1; }
+
+/* HERO NOSOTROS */
+.nosotros-hero {
+  padding: 100px 48px 80px;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--bordo);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+.eyebrow::before, .eyebrow::after {
+  content: '';
+  width: 28px;
+  height: 0.5px;
+  background: var(--bordo);
+}
+
+.nosotros-titulo {
+  font-family: var(--serif);
+  font-size: clamp(40px, 6vw, 72px);
+  font-weight: 400;
+  line-height: 1.05;
+  color: var(--text);
+  margin-bottom: 32px;
+}
+.nosotros-titulo em {
+  color: var(--bordo);
+  font-style: italic;
+}
+
+.nosotros-intro {
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--text-muted);
+  font-weight: 300;
+  letter-spacing: 0.02em;
+}
+
+/* DIVIDER */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  max-width: 600px;
+  margin: 64px auto;
+  padding: 0 48px;
+}
+.divider-line {
+  flex: 1;
+  height: 0.5px;
+  background: var(--border-strong);
+}
+.divider-symbol {
+  font-family: var(--serif);
+  font-size: 18px;
+  color: var(--bordo);
+  font-style: italic;
+}
+
+/* BLOQUES DE TEXTO */
+.nosotros-bloques {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 48px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+}
+
+.bloque {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 0 32px;
+  align-items: start;
+}
+
+.bloque-num {
+  font-family: var(--serif);
+  font-size: 11px;
+  font-style: italic;
+  color: var(--bordo);
+  opacity: 0.6;
+  padding-top: 6px;
+  text-align: right;
+}
+
+.bloque-contenido {}
+
+.bloque-titulo {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--text);
+  margin-bottom: 14px;
+  line-height: 1.2;
+}
+.bloque-titulo em { color: var(--bordo); font-style: italic; }
+
+.bloque-texto {
+  font-size: 14px;
+  line-height: 1.9;
+  color: var(--text-muted);
+  font-weight: 300;
+}
+
+/* CITA */
+.cita-section {
+  background: var(--cream2);
+  border-top: 0.5px solid var(--border);
+  border-bottom: 0.5px solid var(--border);
+  padding: 80px 48px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.cita-section::before {
+  content: '"';
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--serif);
+  font-size: 200px;
+  color: rgba(107,26,42,0.05);
+  line-height: 1;
+  pointer-events: none;
+}
+.cita-texto {
+  font-family: var(--serif);
+  font-size: clamp(20px, 3vw, 32px);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--text);
+  line-height: 1.4;
+  max-width: 700px;
+  margin: 0 auto 24px;
+}
+.cita-fuente {
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--bordo);
+}
+
+/* CTA FINAL */
+.nosotros-cta {
+  padding: 80px 48px;
+  text-align: center;
+}
+.nosotros-cta-titulo {
+  font-family: var(--serif);
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 400;
+  color: var(--text);
+  margin-bottom: 32px;
+}
+.nosotros-cta-titulo em { color: var(--bordo); font-style: italic; }
+.btn-primary {
+  background: var(--bordo);
+  color: var(--cream);
+  border: none;
+  padding: 16px 40px;
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+.btn-primary:hover { background: var(--bordo2); transform: translateY(-1px); }
+
+/* FOOTER */
+footer {
+  background: var(--text);
+  color: var(--cream);
+  padding: 64px 48px 32px;
+}
+.footer-top {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: 48px;
+  padding-bottom: 48px;
+  border-bottom: 0.5px solid rgba(245,240,232,0.1);
+  margin-bottom: 32px;
+}
+.footer-brand-name {
+  font-family: var(--serif);
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin-bottom: 12px;
+}
+.footer-brand-name em { color: var(--bordo2); font-style: italic; }
+.footer-brand-desc {
+  font-size: 12px;
+  line-height: 1.7;
+  opacity: 0.5;
+  margin-bottom: 24px;
+  max-width: 220px;
+}
+.footer-social { display: flex; gap: 12px; }
+.social-link {
+  width: 36px; height: 36px;
+  border: 0.5px solid rgba(245,240,232,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; letter-spacing: 0.1em;
+  transition: border-color 0.2s, color 0.2s;
+}
+.social-link:hover { border-color: var(--bordo2); color: var(--bordo2); }
+.footer-col-title {
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  opacity: 0.4;
+  margin-bottom: 20px;
+}
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer-col ul li a {
+  font-size: 13px;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+  font-weight: 300;
+}
+.footer-col ul li a:hover { opacity: 1; }
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  opacity: 0.35;
+  letter-spacing: 0.08em;
+}
+.footer-legal { display: flex; gap: 24px; }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  nav { padding: 14px 24px; }
+  .nav-links, .nav-actions { display: none; }
+  .hamburger { display: flex; }
+  .nosotros-hero { padding: 60px 24px 60px; }
+  .nosotros-bloques { padding: 0 24px 60px; }
+  .cita-section { padding: 60px 24px; }
+  .nosotros-cta { padding: 60px 24px; }
+  .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+}
+@media (max-width: 480px) {
+  .bloque { grid-template-columns: 1fr; gap: 8px; }
+  .bloque-num { text-align: left; }
+  .footer-top { grid-template-columns: 1fr; }
+  .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html" onclick="closeMobileMenu()">Inicio</a>
+  <a href="coleccion.html" onclick="closeMobileMenu()">Colección</a>
+  <a href="nosotros.html" onclick="closeMobileMenu()">Nosotros</a>
+  <div class="mobile-menu-slogan">Solos y de noche</div>
+</div>
+
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span>Envío gratis desde $90.000</span>
+    <span>3 cuotas sin interés</span>
+    <span>Envío gratis desde $90.000</span>
+    <span>3 cuotas sin interés</span>
+    <span>Envío gratis desde $90.000</span>
+    <span>3 cuotas sin interés</span>
+    <span>Envío gratis desde $90.000</span>
+    <span>3 cuotas sin interés</span>
+  </div>
+</div>
+
+<nav>
+  <a href="index.html" class="nav-logo">LUZBELIT<em>O</em></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="coleccion.html">Colección</a></li>
+    <li><a href="nosotros.html" style="color:var(--bordo)">Nosotros</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="nav-cart">Carrito — 0</button>
+  </div>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="page">
+
+  <div class="nosotros-hero">
+    <div class="eyebrow">Nuestra historia</div>
+    <h1 class="nosotros-titulo">No es una marca.<br>Es un <em>gesto.</em></h1>
+    <p class="nosotros-intro">
+      Luzbelito nació de una obsesión. La misma que tiene todo el que alguna vez escuchó a los Redondos y sintió que esa música era suya antes de entenderla.
+    </p>
+  </div>
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-symbol">✦</div>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="nosotros-bloques">
+
+    <div class="bloque">
+      <div class="bloque-num">01</div>
+      <div class="bloque-contenido">
+        <div class="bloque-titulo">Por qué <em>Luzbelito</em></div>
+        <p class="bloque-texto">
+          El nombre viene de una canción de Patricio Rey y sus Redonditos de Ricota. No hace falta explicar por qué — si la conocés, ya entendés todo. Si no la conocés, bienvenido: algo bueno te está esperando. Luzbelito no es un personaje ni una metáfora. Es una manera de decir que hay algo más grande que la ropa que te ponés.
+        </p>
+      </div>
+    </div>
+
+    <div class="bloque">
+      <div class="bloque-num">02</div>
+      <div class="bloque-contenido">
+        <div class="bloque-titulo">La <em>mística</em> primero</div>
+        <p class="bloque-texto">
+          El rock nacional argentino tiene algo que no se puede fabricar. Se construyó en sótanos, en canchas de barrio, en estadios llenos de gente que no sabía cómo explicar lo que sentía pero igual estaba ahí. Cada diseño que hacemos intenta capturar algo de eso — no la estética, sino la actitud.
+        </p>
+      </div>
+    </div>
+
+    <div class="bloque">
+      <div class="bloque-num">03</div>
+      <div class="bloque-contenido">
+        <div class="bloque-titulo">Ropa que <em>habla</em></div>
+        <p class="bloque-texto">
+          Antes de abrir la boca, la ropa ya dijo algo. Una remera de los Redondos no es decoración — es una declaración. Trabajamos con esa idea: que lo que ponés pueda contar de dónde venís, qué escuchás, qué te formó. Tiradas cortas, diseño propio, calidad real.
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="cita-section">
+    <div class="cita-texto">
+      "Solos y de noche, salimos a buscar. El cielo era una esponja empapada de lluvia y de aceite."
+    </div>
+    <div class="cita-fuente">Patricio Rey y sus Redonditos de Ricota — Luzbelito</div>
+  </div>
+
+  <div class="nosotros-cta">
+    <div class="nosotros-cta-titulo">Ahora sí.<br><em>Elegí tu banda.</em></div>
+    <a href="coleccion.html"><button class="btn-primary">Ver colección</button></a>
+  </div>
+
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-brand-name">LUZBELIT<em>O</em></div>
+        <p class="footer-brand-desc">Rock nacional hecho ropa. Diseño propio, calidad sin compromiso, desde Argentina.</p>
+        <div class="footer-social">
+          <a href="#" class="social-link">IG</a>
+          <a href="#" class="social-link">WA</a>
+          <a href="#" class="social-link">TK</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Tienda</div>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="coleccion.html">Colección</a></li>
+          <li><a href="nosotros.html">Nosotros</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Ayuda</div>
+        <ul>
+          <li><a href="#">Cambios y devoluciones</a></li>
+          <li><a href="#">Envíos</a></li>
+          <li><a href="#">Guía de talles</a></li>
+          <li><a href="#">Preguntas frecuentes</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Legal</div>
+        <ul>
+          <li><a href="#">Términos</a></li>
+          <li><a href="#">Privacidad</a></li>
+          <li><a href="#">Defensa del consumidor</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 LUZBELITO — Todos los derechos reservados</span>
+      <div class="footer-legal">
+        <a href="#">Términos</a>
+        <a href="#">Privacidad</a>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+function toggleMenu() {
+  const menu = document.getElementById('mobileMenu');
+  const ham = document.getElementById('hamburger');
+  menu.classList.toggle('open');
+  ham.classList.toggle('open');
+  document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+}
+function closeMobileMenu() {
+  const menu = document.getElementById('mobileMenu');
+  const ham = document.getElementById('hamburger');
+  menu.classList.remove('open');
+  ham.classList.remove('open');
+  document.body.style.overflow = '';
+}
+</script>
+</body>
+</html>
