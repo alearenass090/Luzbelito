@@ -737,7 +737,7 @@ const productos = [
 ];
 
 // ---- FUNCIONES ----
-function verBanda(bandaId) {
+function renderBanda(bandaId) {
   const banda = bandas[bandaId];
   const prods = productos.filter(p => p.banda === bandaId);
 
@@ -781,18 +781,44 @@ function verBanda(bandaId) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+function verBanda(bandaId) {
+  // Empujar estado al historial para que "atrás" funcione
+  history.pushState({ banda: bandaId }, '', '?banda=' + bandaId);
+  renderBanda(bandaId);
+}
+
 function volverBandas() {
+  // Empujar estado de vista-bandas al historial
+  history.pushState({ banda: null }, '', 'coleccion.html');
+  mostrarVistaBandas();
+}
+
+function mostrarVistaBandas() {
   document.getElementById('view-productos').style.display = 'none';
   document.getElementById('view-bandas').style.display = 'block';
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// Si venimos con ?banda=xxx en la URL, abrir directo
+// Capturar el botón atrás/adelante del navegador
+window.addEventListener('popstate', (e) => {
+  if (e.state && e.state.banda) {
+    renderBanda(e.state.banda);
+  } else {
+    mostrarVistaBandas();
+  }
+});
+
+// Al cargar la página: si hay ?banda=xxx en la URL, abrir directo
 window.addEventListener('DOMContentLoaded', () => {
   const params = new URLSearchParams(window.location.search);
   const banda = params.get('banda');
   if (banda && bandas[banda]) {
-    verBanda(banda);
+    // Reemplazar el estado inicial con la banda para que "atrás" vuelva a bandas
+    history.replaceState({ banda: banda }, '', '?banda=' + banda);
+    renderBanda(banda);
+  } else {
+    // Estado inicial = vista de bandas
+    history.replaceState({ banda: null }, '', 'coleccion.html');
   }
 });
 
