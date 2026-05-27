@@ -678,12 +678,12 @@ const bandas = {
   },
   babasonicos: {
     nombre: 'Babasónicos',
-    logo: 'Logos/babasonicos.jpg',
+    logo: 'Logos/babasonicos.png',
     bgCircle: ''
   },
   airbag: {
     nombre: 'Airbag',
-    logo: 'Logos/airbag.png',
+    logo: 'Logos/airbag.jpg',
     bgCircle: '#111'
   },
   callejeros: {
@@ -698,12 +698,12 @@ const bandas = {
   },
   charly: {
     nombre: 'Charly García',
-    logo: 'Logos/charly.png',
+    logo: 'Logos/charly.jpg',
     bgCircle: '#111'
   },
   piojos: {
     nombre: 'Los Piojos',
-    logo: 'Logos/piojos.jpg',
+    logo: 'Logos/piojos.png',
     bgCircle: ''
   },
   renga: {
@@ -713,7 +713,7 @@ const bandas = {
   }
 };
 
-// Productos de ejemplo — reemplazá con los reales cuando los tengas
+// Productos 
 const productos = [
   { id: 1, banda: 'redondos', nombre: 'Oktubre', precio: '$28.000', tag: 'Nuevo', sizes: 'S / M / L / XL' },
   { id: 2, banda: 'redondos', nombre: 'Un baión para el ojo idiota', precio: '$28.000', tag: '', sizes: 'M / L / XL' },
@@ -747,7 +747,7 @@ function renderBanda(bandaId) {
   document.getElementById('banda-count-activa').textContent =
     prods.length > 0 ? prods.length + ' remeras disponibles' : 'Próximamente';
 
-  // Renderizar productos
+  // Render
   const grid = document.getElementById('products-grid');
   if (prods.length === 0) {
     grid.innerHTML = `
@@ -782,7 +782,7 @@ function renderBanda(bandaId) {
 }
 
 function verBanda(bandaId) {
-  // Empujar estado al historial para que "atrás" funcione
+  // funcion para volver para atras sin ir al index.
   history.pushState({ banda: bandaId }, '', '?banda=' + bandaId);
   renderBanda(bandaId);
 }
@@ -799,7 +799,7 @@ function mostrarVistaBandas() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// Capturar el botón atrás/adelante del navegador
+// Cap el boton atrás/adelante del navegador
 window.addEventListener('popstate', (e) => {
   if (e.state && e.state.banda) {
     renderBanda(e.state.banda);
