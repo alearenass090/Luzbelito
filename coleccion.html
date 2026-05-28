@@ -497,6 +497,297 @@ nav {
   letter-spacing: 0.08em;
 }
 
+/* ===== DETALLE PRODUCTO ===== */
+#view-detalle {
+  display: none;
+  padding: 40px 48px 80px;
+}
+
+.detalle-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 48px;
+  padding-bottom: 24px;
+  border-bottom: 0.5px solid var(--border);
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.breadcrumb span { cursor: pointer; transition: color 0.2s; }
+.breadcrumb span:hover { color: var(--bordo); }
+.breadcrumb-sep { opacity: 0.3; }
+.breadcrumb-current { color: var(--text-muted); }
+
+.detalle-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+  max-width: 1100px;
+}
+
+/* GALERÍA */
+.detalle-galeria {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: 12px;
+}
+
+.galeria-thumbs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.galeria-thumb {
+  width: 72px;
+  height: 90px;
+  background: var(--cream2);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: border-color 0.2s;
+  flex-shrink: 0;
+}
+.galeria-thumb.active { border-color: var(--bordo); }
+.galeria-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.galeria-thumb-placeholder {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-style: italic;
+  color: rgba(107,26,42,0.15);
+}
+
+.galeria-principal {
+  background: var(--cream2);
+  border: 0.5px solid var(--border);
+  aspect-ratio: 3/4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+.galeria-principal img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.25s;
+}
+.galeria-principal-placeholder {
+  font-family: var(--serif);
+  font-size: 80px;
+  font-weight: 700;
+  font-style: italic;
+  color: rgba(107,26,42,0.08);
+}
+.galeria-tag {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: var(--bordo);
+  color: var(--cream);
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  font-weight: 500;
+}
+.galeria-tag.limited { background: var(--text); }
+
+/* INFO PRODUCTO */
+.detalle-info {}
+
+.detalle-banda {
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--bordo);
+  margin-bottom: 10px;
+}
+
+.detalle-nombre {
+  font-family: var(--serif);
+  font-size: clamp(28px, 3vw, 42px);
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--text);
+  margin-bottom: 20px;
+}
+
+.detalle-precio {
+  font-size: 26px;
+  font-weight: 500;
+  color: var(--text);
+  letter-spacing: 0.02em;
+  margin-bottom: 32px;
+  padding-bottom: 32px;
+  border-bottom: 0.5px solid var(--border);
+}
+
+.detalle-talle-label {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+.detalle-talle-label span {
+  color: var(--bordo);
+  font-weight: 500;
+  margin-left: 6px;
+}
+
+.talles-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 32px;
+}
+
+.talle-btn {
+  width: 52px;
+  height: 52px;
+  border: 0.5px solid var(--border-strong);
+  background: none;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.talle-btn:hover { border-color: var(--bordo); color: var(--bordo); }
+.talle-btn.selected {
+  background: var(--bordo);
+  border-color: var(--bordo);
+  color: var(--cream);
+}
+.talle-btn.agotado {
+  opacity: 0.3;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+.cantidad-label {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+
+.cantidad-ctrl {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 28px;
+  width: fit-content;
+  border: 0.5px solid var(--border-strong);
+}
+.cantidad-btn {
+  width: 48px;
+  height: 48px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: var(--sans);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cantidad-btn:hover { background: var(--cream2); color: var(--bordo); }
+.cantidad-num {
+  width: 56px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text);
+  border-left: 0.5px solid var(--border-strong);
+  border-right: 0.5px solid var(--border-strong);
+  letter-spacing: 0.05em;
+}
+
+.btn-agregar {
+  width: 100%;
+  background: var(--bordo);
+  color: var(--cream);
+  border: none;
+  padding: 18px 32px;
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  margin-bottom: 16px;
+}
+.btn-agregar:hover { background: var(--bordo2); transform: translateY(-1px); }
+.btn-agregar:active { transform: translateY(0); }
+
+.detalle-stock {
+  font-size: 12px;
+  color: var(--text-dim);
+  letter-spacing: 0.1em;
+  text-align: center;
+  margin-bottom: 32px;
+}
+.detalle-stock.poco { color: #c0392b; }
+
+.detalle-desc-titulo {
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 12px;
+  padding-top: 24px;
+  border-top: 0.5px solid var(--border);
+}
+.detalle-desc-texto {
+  font-size: 13px;
+  line-height: 1.85;
+  color: var(--text-muted);
+}
+
+/* RESPONSIVE DETALLE */
+@media (max-width: 900px) {
+  #view-detalle { padding: 32px 24px 60px; }
+  .detalle-grid { grid-template-columns: 1fr; gap: 36px; }
+  .detalle-galeria { grid-template-columns: 60px 1fr; gap: 10px; }
+  .galeria-thumb { width: 60px; height: 76px; }
+}
+@media (max-width: 480px) {
+  .detalle-galeria { grid-template-columns: 1fr; }
+  .galeria-thumbs { flex-direction: row; }
+  .galeria-thumb { width: 64px; height: 64px; }
+}
+
 /* RESPONSIVE */
 @media (max-width: 900px) {
   nav { padding: 14px 24px; }
@@ -660,94 +951,122 @@ nav {
     <div class="products-grid" id="products-grid"></div>
   </div>
 
-</div>
+  <!-- ===== VIEW: DETALLE PRODUCTO ===== -->
+  <div id="view-detalle">
+    <div class="detalle-header">
+      <div class="breadcrumb">
+        <span onclick="volverBandas()">Colección</span>
+        <span class="breadcrumb-sep">·</span>
+        <span id="breadcrumb-banda" onclick="volverProductos()"></span>
+        <span class="breadcrumb-sep">·</span>
+        <span class="breadcrumb-current" id="breadcrumb-producto"></span>
+      </div>
+    </div>
+
+    <div class="detalle-grid">
+      <!-- GALERÍA -->
+      <div class="detalle-galeria">
+        <div class="galeria-thumbs" id="galeria-thumbs"></div>
+        <div class="galeria-principal" id="galeria-principal">
+          <div class="galeria-principal-placeholder">L</div>
+        </div>
+      </div>
+
+      <!-- INFO -->
+      <div class="detalle-info">
+        <div class="detalle-banda" id="detalle-banda"></div>
+        <h1 class="detalle-nombre" id="detalle-nombre"></h1>
+        <div class="detalle-precio" id="detalle-precio"></div>
+
+        <div class="detalle-talle-label">Talle: <span id="talle-seleccionado">—</span></div>
+        <div class="talles-grid" id="talles-grid"></div>
+
+        <div class="cantidad-label">Cantidad</div>
+        <div class="cantidad-ctrl">
+          <button class="cantidad-btn" onclick="cambiarCantidad(-1)">−</button>
+          <div class="cantidad-num" id="cantidad-num">1</div>
+          <button class="cantidad-btn" onclick="cambiarCantidad(1)">+</button>
+        </div>
+
+        <button class="btn-agregar" onclick="agregarAlCarrito()">Agregar al carrito</button>
+        <div class="detalle-stock" id="detalle-stock"></div>
+
+        <div class="detalle-desc-titulo">Descripción</div>
+        <div class="detalle-desc-texto" id="detalle-desc"></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /page -->
 
 <script>
 
 // ---- DATA ----
 const bandas = {
-  redondos: {
-    nombre: 'Patricio Rey y los Redondos',
-    logo: 'Logos/redondos.png',
-    bgCircle: ''
-  },
-  soda: {
-    nombre: 'Soda Stereo',
-    logo: 'Logos/soda.png',
-    bgCircle: ''
-  },
-  babasonicos: {
-    nombre: 'Babasónicos',
-    logo: 'Logos/babasonicos.png',
-    bgCircle: ''
-  },
-  airbag: {
-    nombre: 'Airbag',
-    logo: 'Logos/airbag.jpg',
-    bgCircle: '#111'
-  },
-  callejeros: {
-    nombre: 'Callejeros',
-    logo: 'Logos/cjs.png',
-    bgCircle: '#111'
-  },
-  pastillas: {
-    nombre: 'Las Pastillas del Abuelo',
-    logo: 'Logos/lpda.png',
-    bgCircle: ''
-  },
-  charly: {
-    nombre: 'Charly García',
-    logo: 'Logos/charly.jpg',
-    bgCircle: '#111'
-  },
-  piojos: {
-    nombre: 'Los Piojos',
-    logo: 'Logos/piojos.png',
-    bgCircle: ''
-  },
-  renga: {
-    nombre: 'La Renga',
-    logo: 'Logos/renga.jpg',
-    bgCircle: ''
-  }
+  redondos: { nombre: 'Patricio Rey y los Redondos', logo: 'Logos/redondos.png' },
+  soda:     { nombre: 'Soda Stereo',                 logo: 'Logos/soda.png' },
+  babasonicos: { nombre: 'Babasónicos',              logo: 'Logos/babasonicos.jpg' },
+  airbag:   { nombre: 'Airbag',                      logo: 'Logos/airbag.png' },
+  callejeros: { nombre: 'Callejeros',                logo: 'Logos/cjs.png' },
+  pastillas: { nombre: 'Las Pastillas del Abuelo',   logo: 'Logos/lpda.png' },
+  charly:   { nombre: 'Charly García',               logo: 'Logos/charly.png' },
+  piojos:   { nombre: 'Los Piojos',                  logo: 'Logos/piojos.jpg' },
+  renga:    { nombre: 'La Renga',                    logo: 'Logos/renga.jpg' },
 };
 
-// Productos 
+// Cada producto puede tener un array de fotos (rutas relativas).
+// Si fotos está vacío se muestra el placeholder.
+// desc: descripción larga. stock: número para mostrar.
 const productos = [
-  { id: 1, banda: 'redondos', nombre: 'Oktubre', precio: '$28.000', tag: 'Nuevo', sizes: 'S / M / L / XL' },
-  { id: 2, banda: 'redondos', nombre: 'Un baión para el ojo idiota', precio: '$28.000', tag: '', sizes: 'M / L / XL' },
-  { id: 3, banda: 'redondos', nombre: 'La Mosca y la Sopa', precio: '$28.000', tag: 'Último stock', sizes: 'S / M' },
-  { id: 4, banda: 'soda', nombre: 'Dynamo', precio: '$28.000', tag: 'Nuevo', sizes: 'S / M / L / XL' },
-  { id: 5, banda: 'soda', nombre: 'Nada Personal', precio: '$28.000', tag: '', sizes: 'M / L' },
-  { id: 6, banda: 'soda', nombre: 'Me Verás Volver', precio: '$32.000', tag: 'Edición Limitada', sizes: 'S / M / L / XL' },
-  { id: 7, banda: 'babasonicos', nombre: 'Miami', precio: '$28.000', tag: 'Nuevo', sizes: 'S / M / L / XL' },
-  { id: 8, banda: 'babasonicos', nombre: 'Jessico', precio: '$28.000', tag: '', sizes: 'M / L / XL' },
-  { id: 11, banda: 'airbag', nombre: 'Doce Pasos', precio: '$28.000', tag: 'Nuevo', sizes: 'S / M / L / XL' },
-  { id: 12, banda: 'airbag', nombre: 'Por Mil Noches', precio: '$28.000', tag: '', sizes: 'M / L / XL' },
-  { id: 13, banda: 'callejeros', nombre: 'Rocanroles sin Destino', precio: '$28.000', tag: 'Nuevo', sizes: 'S / M / L' },
-  { id: 14, banda: 'callejeros', nombre: 'Señales', precio: '$28.000', tag: '', sizes: 'M / L / XL' },
-  { id: 15, banda: 'pastillas', nombre: 'El Milagro', precio: '$28.000', tag: 'Nuevo', sizes: 'S / M / L / XL' },
-  { id: 16, banda: 'charly', nombre: 'Clics Modernos', precio: '$28.000', tag: 'Nuevo', sizes: 'S / M / L / XL' },
-  { id: 17, banda: 'charly', nombre: 'La Máquina de Hacer Pájaros', precio: '$30.000', tag: 'Edición Limitada', sizes: 'M / L' },
-  { id: 18, banda: 'piojos', nombre: 'Ay Ay Ay', precio: '$28.000', tag: 'Nuevo', sizes: 'S / M / L / XL' },
-  { id: 19, banda: 'piojos', nombre: 'Trúkkkos', precio: '$28.000', tag: '', sizes: 'M / L / XL' },
-  { id: 20, banda: 'renga', nombre: 'Bailando en una Pata', precio: '$28.000', tag: 'Nuevo', sizes: 'S / M / L / XL' },
-  { id: 21, banda: 'renga', nombre: 'El Revelde', precio: '$28.000', tag: '', sizes: 'M / L / XL' },
+  { id: 1,  banda: 'redondos',   nombre: 'Oktubre',                      precio: '$28.000', tag: 'Nuevo',           sizes: ['S','M','L','XL'], stock: 15, desc: 'Remera 100% algodón peinado. Diseño inspirado en el disco Oktubre de los Redondos. Tirada limitada.', fotos: [] },
+  { id: 2,  banda: 'redondos',   nombre: 'Un baión para el ojo idiota',   precio: '$28.000', tag: '',                sizes: ['M','L','XL'],     stock: 8,  desc: 'Remera 100% algodón peinado. Estampa de alta definición.', fotos: [] },
+  { id: 3,  banda: 'redondos',   nombre: 'La Mosca y la Sopa',            precio: '$28.000', tag: 'Último stock',    sizes: ['S','M'],          stock: 2,  desc: 'Remera 100% algodón peinado. Pocas unidades disponibles.', fotos: [] },
+  { id: 4,  banda: 'soda',       nombre: 'Dynamo',                        precio: '$28.000', tag: 'Nuevo',           sizes: ['S','M','L','XL'], stock: 20, desc: 'Remera 100% algodón peinado. Diseño basado en la era Dynamo de Soda Stereo.', fotos: [] },
+  { id: 5,  banda: 'soda',       nombre: 'Nada Personal',                 precio: '$28.000', tag: '',                sizes: ['M','L'],          stock: 10, desc: 'Remera 100% algodón peinado. Clásico absoluto del rock argentino.', fotos: [] },
+  { id: 6,  banda: 'soda',       nombre: 'Me Verás Volver',               precio: '$32.000', tag: 'Edición Limitada',sizes: ['S','M','L','XL'], stock: 5,  desc: 'Remera edición limitada. 100% algodón peinado premium. Numerada.', fotos: [] },
+  { id: 7,  banda: 'babasonicos',nombre: 'Miami',                         precio: '$28.000', tag: 'Nuevo',           sizes: ['S','M','L','XL'], stock: 18, desc: 'Remera 100% algodón peinado. Estampa Miami de Babasónicos.', fotos: [] },
+  { id: 8,  banda: 'babasonicos',nombre: 'Jessico',                       precio: '$28.000', tag: '',                sizes: ['M','L','XL'],     stock: 12, desc: 'Remera 100% algodón peinado. Icónica portada de Jessico.', fotos: [] },
+  { id: 11, banda: 'airbag',     nombre: 'Doce Pasos',                    precio: '$28.000', tag: 'Nuevo',           sizes: ['S','M','L','XL'], stock: 14, desc: 'Remera 100% algodón peinado. Diseño Doce Pasos de Airbag.', fotos: [] },
+  { id: 12, banda: 'airbag',     nombre: 'Por Mil Noches',                precio: '$28.000', tag: '',                sizes: ['M','L','XL'],     stock: 9,  desc: 'Remera 100% algodón peinado. Rock argentino de ley.', fotos: [] },
+  { id: 13, banda: 'callejeros', nombre: 'Rocanroles sin Destino',        precio: '$28.000', tag: 'Nuevo',           sizes: ['S','M','L'],      stock: 11, desc: 'Remera 100% algodón peinado. Homenaje al disco debut de Callejeros.', fotos: [] },
+  { id: 14, banda: 'callejeros', nombre: 'Señales',                       precio: '$28.000', tag: '',                sizes: ['M','L','XL'],     stock: 7,  desc: 'Remera 100% algodón peinado.', fotos: [] },
+  { id: 15, banda: 'pastillas',  nombre: 'El Milagro',                    precio: '$28.000', tag: 'Nuevo',           sizes: ['S','M','L','XL'], stock: 16, desc: 'Remera 100% algodón peinado. Diseño El Milagro de Las Pastillas del Abuelo.', fotos: [] },
+  { id: 16, banda: 'charly',     nombre: 'Clics Modernos',                precio: '$28.000', tag: 'Nuevo',           sizes: ['S','M','L','XL'], stock: 13, desc: 'Remera 100% algodón peinado. Homenaje al legendario Clics Modernos de Charly.', fotos: [] },
+  { id: 17, banda: 'charly',     nombre: 'La Máquina de Hacer Pájaros',   precio: '$30.000', tag: 'Edición Limitada',sizes: ['M','L'],          stock: 3,  desc: 'Remera edición limitada. Homenaje a La Máquina de Hacer Pájaros. Numerada.', fotos: [] },
+  { id: 18, banda: 'piojos',     nombre: 'Ay Ay Ay',                      precio: '$28.000', tag: 'Nuevo',           sizes: ['S','M','L','XL'], stock: 19, desc: 'Remera 100% algodón peinado. Diseño Ay Ay Ay de Los Piojos.', fotos: [] },
+  { id: 19, banda: 'piojos',     nombre: 'Trúkkkos',                      precio: '$28.000', tag: '',                sizes: ['M','L','XL'],     stock: 6,  desc: 'Remera 100% algodón peinado.', fotos: [] },
+  { id: 20, banda: 'renga',      nombre: 'Bailando en una Pata',          precio: '$28.000', tag: 'Nuevo',           sizes: ['S','M','L','XL'], stock: 17, desc: 'Remera 100% algodón peinado. Diseño inspirado en el clásico de La Renga.', fotos: [] },
+  { id: 21, banda: 'renga',      nombre: 'El Revelde',                    precio: '$28.000', tag: '',                sizes: ['M','L','XL'],     stock: 4,  desc: 'Remera 100% algodón peinado.', fotos: [] },
 ];
 
-// ---- FUNCIONES ----
-function renderBanda(bandaId) {
+// ---- ESTADO ----
+let bandaActual = null;
+let productoActual = null;
+let talleSeleccionado = null;
+let cantidad = 1;
+
+// ---- VISTAS ----
+function ocultarTodo() {
+  document.getElementById('view-bandas').style.display = 'none';
+  document.getElementById('view-productos').style.display = 'none';
+  document.getElementById('view-detalle').style.display = 'none';
+}
+
+function mostrarVistaBandas() {
+  ocultarTodo();
+  document.getElementById('view-bandas').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function mostrarVistaProductos(bandaId) {
   const banda = bandas[bandaId];
   const prods = productos.filter(p => p.banda === bandaId);
 
-  // Actualizar header
   document.getElementById('banda-logo-activa').src = banda.logo;
   document.getElementById('banda-nombre-activa').innerHTML = banda.nombre;
   document.getElementById('banda-count-activa').textContent =
     prods.length > 0 ? prods.length + ' remeras disponibles' : 'Próximamente';
 
-  // Render
   const grid = document.getElementById('products-grid');
   if (prods.length === 0) {
     grid.innerHTML = `
@@ -757,72 +1076,186 @@ function renderBanda(bandaId) {
       </div>`;
   } else {
     grid.innerHTML = prods.map(p => `
-      <div class="product-card">
+      <div class="product-card" onclick="verProducto(${p.id})">
         <div class="product-img">
-          <div class="product-img-placeholder">L</div>
+          ${p.fotos.length ? `<img src="${p.fotos[0]}" alt="${p.nombre}" style="width:100%;height:100%;object-fit:cover;">` : '<div class="product-img-placeholder">L</div>'}
           ${p.tag ? `<div class="product-tag ${p.tag === 'Edición Limitada' ? 'limited' : ''}">${p.tag}</div>` : ''}
           <div class="product-hover-overlay">
-            <div class="product-hover-btn">Agregar al carrito</div>
+            <div class="product-hover-btn">Ver producto</div>
           </div>
         </div>
         <div class="product-info">
           <div class="product-banda">${banda.nombre}</div>
           <div class="product-name">${p.nombre}</div>
           <div class="product-price">${p.precio}</div>
-          <div class="product-sizes">Talles: ${p.sizes}</div>
+          <div class="product-sizes">Talles: ${p.sizes.join(' / ')}</div>
         </div>
       </div>
     `).join('');
   }
 
-  // Cambiar vista
-  document.getElementById('view-bandas').style.display = 'none';
+  ocultarTodo();
   document.getElementById('view-productos').style.display = 'block';
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function verBanda(bandaId) {
-  // funcion para volver para atras sin ir al index.
-  history.pushState({ banda: bandaId }, '', '?banda=' + bandaId);
-  renderBanda(bandaId);
-}
+function mostrarVistaDetalle(prodId) {
+  const prod = productos.find(p => p.id === prodId);
+  if (!prod) return;
+  const banda = bandas[prod.banda];
 
-function volverBandas() {
-  // Empujar estado de vista-bandas al historial
-  history.pushState({ banda: null }, '', 'coleccion.html');
-  mostrarVistaBandas();
-}
+  productoActual = prod;
+  talleSeleccionado = null;
+  cantidad = 1;
 
-function mostrarVistaBandas() {
-  document.getElementById('view-productos').style.display = 'none';
-  document.getElementById('view-bandas').style.display = 'block';
+  // Breadcrumb
+  document.getElementById('breadcrumb-banda').textContent = banda.nombre;
+  document.getElementById('breadcrumb-producto').textContent = prod.nombre;
+
+  // Info
+  document.getElementById('detalle-banda').textContent = banda.nombre;
+  document.getElementById('detalle-nombre').textContent = prod.nombre;
+  document.getElementById('detalle-precio').textContent = prod.precio;
+  document.getElementById('detalle-desc').textContent = prod.desc;
+  document.getElementById('talle-seleccionado').textContent = '—';
+  document.getElementById('cantidad-num').textContent = '1';
+
+  // Stock
+  const stockEl = document.getElementById('detalle-stock');
+  if (prod.stock <= 3) {
+    stockEl.textContent = `¡Solo quedan ${prod.stock} unidades!`;
+    stockEl.className = 'detalle-stock poco';
+  } else {
+    stockEl.textContent = `${prod.stock} en stock`;
+    stockEl.className = 'detalle-stock';
+  }
+
+  // Galería
+  const thumbsEl = document.getElementById('galeria-thumbs');
+  const principalEl = document.getElementById('galeria-principal');
+
+  if (prod.fotos.length > 0) {
+    // Con fotos reales
+    principalEl.innerHTML = `
+      ${prod.tag ? `<div class="galeria-tag ${prod.tag === 'Edición Limitada' ? 'limited' : ''}">${prod.tag}</div>` : ''}
+      <img id="foto-principal" src="${prod.fotos[0]}" alt="${prod.nombre}">
+    `;
+    thumbsEl.innerHTML = prod.fotos.map((f, i) => `
+      <div class="galeria-thumb ${i === 0 ? 'active' : ''}" onclick="cambiarFoto(${i})">
+        <img src="${f}" alt="${prod.nombre} foto ${i+1}">
+      </div>
+    `).join('');
+  } else {
+    // Placeholder mientras no haya fotos
+    principalEl.innerHTML = `
+      ${prod.tag ? `<div class="galeria-tag ${prod.tag === 'Edición Limitada' ? 'limited' : ''}">${prod.tag}</div>` : ''}
+      <div class="galeria-principal-placeholder">L</div>
+    `;
+    thumbsEl.innerHTML = `
+      <div class="galeria-thumb active"><div class="galeria-thumb-placeholder">L</div></div>
+      <div class="galeria-thumb"><div class="galeria-thumb-placeholder">L</div></div>
+    `;
+  }
+
+  // Talles
+  document.getElementById('talles-grid').innerHTML = prod.sizes.map(s => `
+    <button class="talle-btn" onclick="seleccionarTalle('${s}', this)">${s}</button>
+  `).join('');
+
+  ocultarTodo();
+  document.getElementById('view-detalle').style.display = 'block';
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// Cap el boton atrás/adelante del navegador
+// ---- NAVEGACIÓN CON HISTORIAL ----
+function verBanda(bandaId) {
+  bandaActual = bandaId;
+  history.pushState({ vista: 'productos', banda: bandaId }, '', '?banda=' + bandaId);
+  mostrarVistaProductos(bandaId);
+}
+
+function verProducto(prodId) {
+  history.pushState({ vista: 'detalle', banda: bandaActual, prod: prodId }, '', '?banda=' + bandaActual + '&prod=' + prodId);
+  mostrarVistaDetalle(prodId);
+}
+
+function volverBandas() {
+  history.pushState({ vista: 'bandas' }, '', 'coleccion.html');
+  mostrarVistaBandas();
+}
+
+function volverProductos() {
+  history.pushState({ vista: 'productos', banda: bandaActual }, '', '?banda=' + bandaActual);
+  mostrarVistaProductos(bandaActual);
+}
+
 window.addEventListener('popstate', (e) => {
-  if (e.state && e.state.banda) {
-    renderBanda(e.state.banda);
-  } else {
+  const s = e.state;
+  if (!s || s.vista === 'bandas') {
     mostrarVistaBandas();
+  } else if (s.vista === 'productos') {
+    bandaActual = s.banda;
+    mostrarVistaProductos(s.banda);
+  } else if (s.vista === 'detalle') {
+    bandaActual = s.banda;
+    mostrarVistaDetalle(s.prod);
   }
 });
 
-// Al cargar la página: si hay ?banda=xxx en la URL, abrir directo
 window.addEventListener('DOMContentLoaded', () => {
   const params = new URLSearchParams(window.location.search);
   const banda = params.get('banda');
-  if (banda && bandas[banda]) {
-    // Reemplazar el estado inicial con la banda para que "atrás" vuelva a bandas
-    history.replaceState({ banda: banda }, '', '?banda=' + banda);
-    renderBanda(banda);
+  const prod = parseInt(params.get('prod'));
+  if (banda && prod && bandas[banda]) {
+    bandaActual = banda;
+    history.replaceState({ vista: 'detalle', banda, prod }, '', window.location.search);
+    mostrarVistaDetalle(prod);
+  } else if (banda && bandas[banda]) {
+    bandaActual = banda;
+    history.replaceState({ vista: 'productos', banda }, '', '?banda=' + banda);
+    mostrarVistaProductos(banda);
   } else {
-    // Estado inicial = vista de bandas
-    history.replaceState({ banda: null }, '', 'coleccion.html');
+    history.replaceState({ vista: 'bandas' }, '', 'coleccion.html');
   }
 });
 
-// Mobile menu
+// ---- DETALLE: INTERACCIONES ----
+function cambiarFoto(idx) {
+  const prod = productoActual;
+  if (!prod || !prod.fotos.length) return;
+  document.getElementById('foto-principal').src = prod.fotos[idx];
+  document.querySelectorAll('.galeria-thumb').forEach((t, i) => {
+    t.classList.toggle('active', i === idx);
+  });
+}
+
+function seleccionarTalle(talle, btn) {
+  talleSeleccionado = talle;
+  document.getElementById('talle-seleccionado').textContent = talle;
+  document.querySelectorAll('.talle-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+
+function cambiarCantidad(delta) {
+  cantidad = Math.max(1, Math.min(productoActual ? productoActual.stock : 10, cantidad + delta));
+  document.getElementById('cantidad-num').textContent = cantidad;
+}
+
+function agregarAlCarrito() {
+  if (!talleSeleccionado) {
+    document.getElementById('talle-seleccionado').style.color = '#c0392b';
+    document.querySelector('.detalle-talle-label').style.color = '#c0392b';
+    setTimeout(() => {
+      document.getElementById('talle-seleccionado').style.color = '';
+      document.querySelector('.detalle-talle-label').style.color = '';
+    }, 1500);
+    return;
+  }
+  // Acá más adelante conectás con tu lógica de carrito
+  alert(`Agregado: ${productoActual.nombre} — Talle ${talleSeleccionado} x${cantidad}`);
+}
+
+// ---- MOBILE MENU ----
 function toggleMenu() {
   const menu = document.getElementById('mobileMenu');
   const ham = document.getElementById('hamburger');
