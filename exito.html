@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LUZBELITO — ¡Pedido confirmado!</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --cream: #f5f0e8; --cream2: #ede7d9;
+  --bordo: #6b1a2a; --bordo2: #8b2035;
+  --text: #1a1410; --text-muted: rgba(26,20,16,0.5); --text-dim: rgba(26,20,16,0.28);
+  --border: rgba(26,20,16,0.1); --border-strong: rgba(26,20,16,0.2);
+  --serif: 'Playfair Display', Georgia, serif; --sans: 'Jost', sans-serif;
+}
+html { scroll-behavior: smooth; }
+body { background: var(--cream); color: var(--text); font-family: var(--sans); font-weight: 300; overflow-x: hidden; min-height: 100vh; display: flex; flex-direction: column; }
+body::before {
+  content: ''; position: fixed; inset: 0;
+  background-image: repeating-linear-gradient(118deg, transparent, transparent 40px, rgba(107,26,42,0.015) 40px, rgba(107,26,42,0.015) 41px), repeating-linear-gradient(62deg, transparent, transparent 80px, rgba(26,20,16,0.012) 80px, rgba(26,20,16,0.012) 81px);
+  pointer-events: none; z-index: 0;
+}
+a { color: inherit; text-decoration: none; }
+
+.ticker-wrap { background: var(--bordo); padding: 9px 0; overflow: hidden; white-space: nowrap; position: relative; z-index: 10; }
+.ticker { display: inline-flex; animation: ticker 20s linear infinite; }
+.ticker span { font-size: 10px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--cream); padding: 0 2rem; font-family: var(--sans); }
+.ticker span::after { content: '✦'; margin-left: 2rem; opacity: 0.45; }
+@keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+nav { position: relative; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 16px 48px; background: rgba(245,240,232,0.97); border-bottom: 0.5px solid var(--border); }
+.nav-logo { font-family: var(--serif); font-size: 20px; font-weight: 700; letter-spacing: 0.08em; }
+.nav-logo em { color: var(--bordo); font-style: italic; }
+.nav-links { display: flex; gap: 32px; list-style: none; }
+.nav-links a { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); transition: color 0.2s; }
+.nav-links a:hover { color: var(--bordo); }
+
+.main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 80px 48px; position: relative; z-index: 1; }
+.card {
+  max-width: 560px; width: 100%; text-align: center;
+  background: var(--cream2); border: 0.5px solid var(--border);
+  padding: 64px 48px;
+  animation: fadeUp 0.6s ease both;
+}
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+.icono {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: rgba(107,26,42,0.08); border: 1px solid rgba(107,26,42,0.2);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 28px; font-size: 24px;
+}
+
+.eyebrow { font-size: 10px; letter-spacing: 0.35em; text-transform: uppercase; color: var(--bordo); margin-bottom: 16px; }
+
+.titulo { font-family: var(--serif); font-size: clamp(28px, 4vw, 42px); font-weight: 400; color: var(--text); margin-bottom: 20px; line-height: 1.1; }
+.titulo em { color: var(--bordo); font-style: italic; }
+
+.texto { font-size: 14px; line-height: 1.8; color: var(--text-muted); margin-bottom: 40px; }
+
+.referencia { font-size: 11px; letter-spacing: 0.15em; color: var(--text-dim); margin-bottom: 40px; padding: 16px 24px; border: 0.5px solid var(--border); display: inline-block; }
+.referencia span { color: var(--text-muted); font-weight: 500; }
+
+.acciones { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+.btn-primary { background: var(--bordo); color: var(--cream); border: none; padding: 15px 32px; font-family: var(--sans); font-size: 11px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; transition: background 0.2s, transform 0.2s; }
+.btn-primary:hover { background: var(--bordo2); transform: translateY(-1px); }
+.btn-secondary { background: none; color: var(--text-muted); border: 0.5px solid var(--border-strong); padding: 15px 32px; font-family: var(--sans); font-size: 11px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
+.btn-secondary:hover { color: var(--bordo); border-color: var(--bordo); }
+
+footer { background: var(--text); color: var(--cream); padding: 28px 48px; position: relative; z-index: 1; }
+.footer-bottom { display: flex; justify-content: space-between; font-size: 11px; opacity: 0.35; letter-spacing: 0.08em; }
+
+@media (max-width: 600px) {
+  nav { padding: 14px 24px; }
+  .nav-links { display: none; }
+  .main { padding: 40px 24px; }
+  .card { padding: 40px 24px; }
+}
+</style>
+</head>
+<body>
+
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span>Gracias por tu compra</span><span>Rock Nacional</span>
+    <span>Gracias por tu compra</span><span>Rock Nacional</span>
+    <span>Gracias por tu compra</span><span>Rock Nacional</span>
+    <span>Gracias por tu compra</span><span>Rock Nacional</span>
+  </div>
+</div>
+
+<nav>
+  <a href="index.html" class="nav-logo">LUZBELIT<em>O</em></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="coleccion.html">Colección</a></li>
+    <li><a href="nosotros.html">Nosotros</a></li>
+  </ul>
+</nav>
+
+<div class="main">
+  <div class="card">
+    <div class="icono">✦</div>
+    <div class="eyebrow">Pago confirmado</div>
+    <h1 class="titulo">¡Tu pedido<br>está <em>en camino!</em></h1>
+    <p class="texto">
+      Recibimos tu pago correctamente. En breve te llegará un email con los detalles y el número de seguimiento de tu envío.
+    </p>
+    <div class="referencia" id="ref-box" style="display:none">
+      Referencia: <span id="ref-num">—</span>
+    </div>
+    <div class="acciones">
+      <button class="btn-primary" onclick="window.location.href='coleccion.html'">Seguir comprando</button>
+      <button class="btn-secondary" onclick="window.location.href='index.html'">Volver al inicio</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-bottom">
+    <span>© 2025 LUZBELITO</span>
+    <span>Rock Nacional</span>
+  </div>
+</footer>
+
+<script>
+// Mostrar referencia si MP la manda por URL
+const params = new URLSearchParams(window.location.search);
+const ref = params.get('external_reference') || params.get('preference_id');
+if (ref) {
+  document.getElementById('ref-num').textContent = ref;
+  document.getElementById('ref-box').style.display = 'inline-block';
+}
+// Limpiar carrito por si quedó algo
+localStorage.removeItem('luzbelito_carrito');
+</script>
+</body>
+</html>

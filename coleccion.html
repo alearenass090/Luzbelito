@@ -840,7 +840,7 @@ nav {
     <li><a href="nosotros.html">Nosotros</a></li>
   </ul>
   <div class="nav-actions">
-    <button class="nav-cart">Carrito — 0</button>
+    <button class="nav-cart" id="nav-cart-btn" onclick="window.location.href='carrito.html'">Carrito — 0</button>
   </div>
   <button class="hamburger" id="hamburger" aria-label="Menú" onclick="toggleMenu()">
     <span></span><span></span><span></span>
@@ -1222,6 +1222,7 @@ window.addEventListener('popstate', (e) => {
 
 window.addEventListener('DOMContentLoaded', async () => {
   await cargarProductos();
+  actualizarNavCarrito();
 
   const params = new URLSearchParams(window.location.search);
   const banda = params.get('banda');
@@ -1262,6 +1263,23 @@ function cambiarCantidad(delta) {
   document.getElementById('cantidad-num').textContent = cantidad;
 }
 
+// ---- CARRITO (localStorage) ----
+function getCarrito() {
+  try { return JSON.parse(localStorage.getItem('luzbelito_carrito')) || []; }
+  catch(e) { return []; }
+}
+function saveCarrito(carrito) {
+  localStorage.setItem('luzbelito_carrito', JSON.stringify(carrito));
+}
+function actualizarNavCarrito() {
+  const total = getCarrito().reduce((s, i) => s + i.cantidad, 0);
+  const btn = document.getElementById('nav-cart-btn');
+  if (btn) btn.textContent = total > 0 ? `Carrito (${total})` : 'Carrito — 0';
+}
+function precioNum(str) {
+  return parseInt((str || '0').replace(/\D/g, '')) || 0;
+}
+
 function agregarAlCarrito() {
   if (!talleSeleccionado) {
     document.getElementById('talle-seleccionado').style.color = '#c0392b';
@@ -1272,8 +1290,33 @@ function agregarAlCarrito() {
     }, 1500);
     return;
   }
-  // Acá más adelante conectás con tu lógica de carrito
-  alert(`Agregado: ${productoActual.nombre} — Talle ${talleSeleccionado} x${cantidad}`);
+  const carrito = getCarrito();
+  const key = `${productoActual.id}_${talleSeleccionado}`;
+  const existe = carrito.find(i => i.key === key);
+  if (existe) {
+    existe.cantidad += cantidad;
+  } else {
+    const banda = bandas[productoActual.banda];
+    carrito.push({
+      key,
+      id: productoActual.id,
+      nombre: productoActual.nombre,
+      banda: productoActual.banda,
+      bandaNombre: banda ? banda.nombre : '',
+      talle: talleSeleccionado,
+      cantidad,
+      precio: productoActual.precio,
+      precio_num: precioNum(productoActual.precio),
+      foto: productoActual.fotos && productoActual.fotos.length ? productoActual.fotos[0] : null
+    });
+  }
+  saveCarrito(carrito);
+  actualizarNavCarrito();
+  const btn = document.querySelector('.btn-agregar');
+  const orig = btn.textContent;
+  btn.textContent = '✓ Agregado';
+  btn.style.background = '#2d6a2d';
+  setTimeout(() => { btn.textContent = orig; btn.style.background = ''; }, 1800);
 }
 
 // ---- MOBILE MENU ----

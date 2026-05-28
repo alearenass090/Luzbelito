@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LUZBELITO — Finalizar compra</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --cream: #f5f0e8; --cream2: #ede7d9;
+  --bordo: #6b1a2a; --bordo2: #8b2035;
+  --text: #1a1410; --text-muted: rgba(26,20,16,0.5); --text-dim: rgba(26,20,16,0.28);
+  --border: rgba(26,20,16,0.1); --border-strong: rgba(26,20,16,0.2);
+  --serif: 'Playfair Display', Georgia, serif; --sans: 'Jost', sans-serif;
+}
+html { scroll-behavior: smooth; }
+body { background: var(--cream); color: var(--text); font-family: var(--sans); font-weight: 300; overflow-x: hidden; min-height: 100vh; }
+body::before {
+  content: ''; position: fixed; inset: 0;
+  background-image: repeating-linear-gradient(118deg, transparent, transparent 40px, rgba(107,26,42,0.015) 40px, rgba(107,26,42,0.015) 41px), repeating-linear-gradient(62deg, transparent, transparent 80px, rgba(26,20,16,0.012) 80px, rgba(26,20,16,0.012) 81px);
+  pointer-events: none; z-index: 0;
+}
+a { color: inherit; text-decoration: none; }
+
+/* TICKER */
+.ticker-wrap { background: var(--bordo); padding: 9px 0; overflow: hidden; white-space: nowrap; position: relative; z-index: 10; }
+.ticker { display: inline-flex; animation: ticker 20s linear infinite; }
+.ticker span { font-family: var(--sans); font-size: 10px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--cream); padding: 0 2rem; }
+.ticker span::after { content: '✦'; margin-left: 2rem; opacity: 0.45; }
+@keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+/* NAV */
+nav { position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 16px 48px; background: rgba(245,240,232,0.97); border-bottom: 0.5px solid var(--border); backdrop-filter: blur(8px); }
+.nav-logo { font-family: var(--serif); font-size: 20px; font-weight: 700; letter-spacing: 0.08em; }
+.nav-logo em { color: var(--bordo); font-style: italic; }
+.nav-links { display: flex; gap: 32px; list-style: none; }
+.nav-links a { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); transition: color 0.2s; }
+.nav-links a:hover { color: var(--bordo); }
+.nav-cart { border: 0.5px solid var(--border-strong); padding: 8px 18px; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); cursor: pointer; background: none; transition: all 0.2s; font-family: var(--sans); }
+.nav-cart:hover { color: var(--bordo); border-color: var(--bordo); }
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+.hamburger span { display: block; width: 24px; height: 1px; background: var(--text); transition: all 0.3s; }
+.hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(4px,4px); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(4px,-4px); }
+.mobile-menu { display: none; position: fixed; inset: 0; background: var(--cream); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 36px; opacity: 0; transition: opacity 0.3s; }
+.mobile-menu.open { display: flex; opacity: 1; }
+.mobile-menu a { font-family: var(--serif); font-size: 32px; color: var(--text); }
+.mobile-menu a:hover { color: var(--bordo); }
+.mobile-menu-slogan { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-dim); margin-top: 20px; }
+
+/* PAGE */
+.page { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 60px 48px 100px; }
+
+/* STEPS */
+.steps {
+  display: flex; align-items: center; gap: 0;
+  margin-bottom: 56px; max-width: 480px; margin-left: auto; margin-right: auto;
+}
+.step { display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1; }
+.step-circle {
+  width: 32px; height: 32px; border-radius: 50%;
+  border: 0.5px solid var(--border-strong);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; color: var(--text-dim); font-weight: 500;
+  transition: all 0.3s;
+}
+.step.active .step-circle { background: var(--bordo); border-color: var(--bordo); color: var(--cream); }
+.step.done .step-circle { background: var(--text); border-color: var(--text); color: var(--cream); }
+.step-label { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-dim); }
+.step.active .step-label { color: var(--bordo); }
+.step.done .step-label { color: var(--text-muted); }
+.step-line { flex: 1; height: 0.5px; background: var(--border-strong); margin-bottom: 20px; }
+
+/* LAYOUT */
+.checkout-layout { display: grid; grid-template-columns: 1fr 360px; gap: 48px; align-items: start; }
+
+/* FORM */
+.form-section { margin-bottom: 40px; }
+.section-titulo {
+  font-family: var(--serif); font-size: 20px; font-weight: 400; color: var(--text);
+  margin-bottom: 24px; padding-bottom: 16px; border-bottom: 0.5px solid var(--border);
+  display: flex; align-items: center; gap: 12px;
+}
+.section-num {
+  width: 28px; height: 28px; border-radius: 50%; border: 0.5px solid var(--bordo);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; color: var(--bordo); font-weight: 500; flex-shrink: 0;
+}
+
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.form-row.full { grid-template-columns: 1fr; }
+.form-row.tri { grid-template-columns: 2fr 1fr 1fr; }
+
+.form-group { display: flex; flex-direction: column; gap: 8px; }
+.form-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); }
+.form-input {
+  background: none; border: 0.5px solid var(--border-strong);
+  padding: 13px 16px; font-family: var(--sans); font-size: 13px; color: var(--text);
+  font-weight: 300; outline: none; transition: border-color 0.2s;
+  width: 100%;
+}
+.form-input:focus { border-color: var(--bordo); }
+.form-input::placeholder { color: var(--text-dim); }
+
+/* RADIO CARDS */
+.radio-grid { display: flex; flex-direction: column; gap: 12px; }
+.radio-card {
+  border: 0.5px solid var(--border-strong); padding: 18px 20px;
+  cursor: pointer; transition: border-color 0.2s, background 0.2s;
+  display: flex; align-items: flex-start; gap: 14px;
+  position: relative;
+}
+.radio-card:hover { border-color: var(--bordo); }
+.radio-card.selected { border-color: var(--bordo); background: rgba(107,26,42,0.03); }
+.radio-card input[type="radio"] { display: none; }
+.radio-dot {
+  width: 18px; height: 18px; border-radius: 50%; border: 1px solid var(--border-strong);
+  flex-shrink: 0; margin-top: 2px; display: flex; align-items: center; justify-content: center;
+  transition: border-color 0.2s;
+}
+.radio-card.selected .radio-dot { border-color: var(--bordo); }
+.radio-dot-inner {
+  width: 8px; height: 8px; border-radius: 50%; background: var(--bordo);
+  opacity: 0; transition: opacity 0.2s; transform: scale(0.8);
+}
+.radio-card.selected .radio-dot-inner { opacity: 1; transform: scale(1); }
+.radio-info {}
+.radio-titulo { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
+.radio-desc { font-size: 11px; color: var(--text-muted); line-height: 1.5; }
+.radio-badge {
+  position: absolute; top: 12px; right: 14px;
+  font-size: 8px; letter-spacing: 0.15em; text-transform: uppercase;
+  background: var(--bordo); color: var(--cream); padding: 3px 8px;
+}
+
+/* PAGO DETALLE */
+.pago-detalle {
+  background: var(--cream2); border: 0.5px solid var(--border);
+  padding: 20px; margin-top: 12px; display: none;
+}
+.pago-detalle.visible { display: block; }
+.pago-detalle p { font-size: 13px; color: var(--text-muted); line-height: 1.7; }
+.pago-detalle strong { color: var(--text); font-weight: 500; }
+
+/* RESUMEN */
+.checkout-resumen { background: var(--cream2); border: 0.5px solid var(--border); padding: 32px; position: sticky; top: 100px; }
+.resumen-titulo { font-family: var(--serif); font-size: 20px; font-weight: 400; color: var(--text); margin-bottom: 24px; padding-bottom: 20px; border-bottom: 0.5px solid var(--border-strong); }
+.resumen-items { margin-bottom: 24px; display: flex; flex-direction: column; gap: 16px; }
+.resumen-item { display: flex; align-items: center; gap: 12px; }
+.resumen-item-foto { width: 48px; height: 60px; background: var(--cream); border: 0.5px solid var(--border); overflow: hidden; flex-shrink: 0; }
+.resumen-item-foto img { width: 100%; height: 100%; object-fit: cover; }
+.resumen-item-foto-ph { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 16px; font-style: italic; color: rgba(107,26,42,0.15); }
+.resumen-item-info { flex: 1; }
+.resumen-item-nombre { font-family: var(--serif); font-size: 13px; color: var(--text); line-height: 1.3; }
+.resumen-item-sub { font-size: 10px; letter-spacing: 0.12em; color: var(--text-dim); text-transform: uppercase; margin-top: 3px; }
+.resumen-item-precio { font-size: 13px; font-weight: 500; color: var(--text); flex-shrink: 0; }
+.resumen-sep { height: 0.5px; background: var(--border); margin: 4px 0; }
+.resumen-linea { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-muted); margin-bottom: 8px; }
+.resumen-total { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; padding-top: 16px; border-top: 0.5px solid var(--border-strong); }
+.resumen-total .label { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); }
+.resumen-total .valor { font-family: var(--serif); font-size: 24px; font-weight: 400; color: var(--text); }
+
+/* BOTÓN FINAL */
+.btn-confirmar {
+  width: 100%; background: var(--bordo); color: var(--cream); border: none;
+  padding: 18px; font-family: var(--sans); font-size: 11px; font-weight: 500;
+  letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer;
+  transition: background 0.2s, transform 0.2s; margin-top: 24px;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+.btn-confirmar:hover { background: var(--bordo2); transform: translateY(-1px); }
+.btn-confirmar:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+.btn-volver-carrito {
+  display: block; text-align: center; margin-top: 14px;
+  font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--text-dim); cursor: pointer; transition: color 0.2s;
+  background: none; border: none; font-family: var(--sans); width: 100%;
+}
+.btn-volver-carrito:hover { color: var(--bordo); }
+
+/* LOADING */
+.loading-overlay {
+  display: none; position: fixed; inset: 0; background: rgba(245,240,232,0.9);
+  z-index: 200; flex-direction: column; align-items: center; justify-content: center; gap: 20px;
+}
+.loading-overlay.visible { display: flex; }
+.loading-spinner {
+  width: 40px; height: 40px; border: 1px solid var(--border-strong);
+  border-top-color: var(--bordo); border-radius: 50%; animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-texto { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); }
+
+/* ERROR */
+.form-error { font-size: 10px; color: #c0392b; letter-spacing: 0.05em; margin-top: 4px; display: none; }
+.form-input.error { border-color: #c0392b; }
+
+/* FOOTER */
+footer { background: var(--text); color: var(--cream); padding: 32px 48px; }
+.footer-bottom { display: flex; justify-content: space-between; align-items: center; font-size: 11px; opacity: 0.35; letter-spacing: 0.08em; }
+
+@media (max-width: 900px) {
+  nav { padding: 14px 24px; }
+  .nav-links, .nav-actions { display: none; }
+  .hamburger { display: flex; }
+  .page { padding: 40px 24px 80px; }
+  .checkout-layout { grid-template-columns: 1fr; }
+  .checkout-resumen { position: static; order: -1; }
+  .form-row { grid-template-columns: 1fr; }
+  .form-row.tri { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-spinner"></div>
+  <div class="loading-texto">Procesando tu pedido…</div>
+</div>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html" onclick="closeMobileMenu()">Inicio</a>
+  <a href="coleccion.html" onclick="closeMobileMenu()">Colección</a>
+  <a href="nosotros.html" onclick="closeMobileMenu()">Nosotros</a>
+  <div class="mobile-menu-slogan">Solos y de noche</div>
+</div>
+
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span>Envío gratis desde $90.000</span><span>3 cuotas sin interés</span>
+    <span>Envío gratis desde $90.000</span><span>3 cuotas sin interés</span>
+    <span>Envío gratis desde $90.000</span><span>3 cuotas sin interés</span>
+    <span>Envío gratis desde $90.000</span><span>3 cuotas sin interés</span>
+  </div>
+</div>
+
+<nav>
+  <a href="index.html" class="nav-logo">LUZBELIT<em>O</em></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="coleccion.html">Colección</a></li>
+    <li><a href="nosotros.html">Nosotros</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="nav-cart" onclick="window.location.href='carrito.html'">Carrito</button>
+  </div>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="page">
+
+  <!-- STEPS -->
+  <div class="steps">
+    <div class="step done">
+      <div class="step-circle">✓</div>
+      <div class="step-label">Carrito</div>
+    </div>
+    <div class="step-line"></div>
+    <div class="step active">
+      <div class="step-circle">2</div>
+      <div class="step-label">Datos y pago</div>
+    </div>
+    <div class="step-line"></div>
+    <div class="step">
+      <div class="step-circle">3</div>
+      <div class="step-label">Confirmación</div>
+    </div>
+  </div>
+
+  <div class="checkout-layout">
+
+    <!-- FORMULARIO -->
+    <div>
+
+      <!-- 1. DATOS PERSONALES -->
+      <div class="form-section">
+        <div class="section-titulo">
+          <div class="section-num">1</div>
+          Datos personales
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Nombre *</label>
+            <input class="form-input" type="text" id="nombre" placeholder="Tu nombre">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Apellido *</label>
+            <input class="form-input" type="text" id="apellido" placeholder="Tu apellido">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Email *</label>
+            <input class="form-input" type="email" id="email" placeholder="tu@email.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Teléfono *</label>
+            <input class="form-input" type="tel" id="telefono" placeholder="11 2345 6789">
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. DIRECCIÓN DE ENVÍO -->
+      <div class="form-section">
+        <div class="section-titulo">
+          <div class="section-num">2</div>
+          Dirección de envío
+        </div>
+        <div class="form-row full">
+          <div class="form-group">
+            <label class="form-label">Calle y número *</label>
+            <input class="form-input" type="text" id="calle" placeholder="Ej: Av. Corrientes 1234">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Piso / Depto</label>
+            <input class="form-input" type="text" id="piso" placeholder="Ej: 3° B (opcional)">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Ciudad *</label>
+            <input class="form-input" type="text" id="ciudad" placeholder="Tu ciudad">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Provincia *</label>
+            <input class="form-input" type="text" id="provincia" placeholder="Tu provincia">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Código postal *</label>
+            <input class="form-input" type="text" id="cp" placeholder="Ej: 1414">
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. MÉTODO DE ENVÍO -->
+      <div class="form-section">
+        <div class="section-titulo">
+          <div class="section-num">3</div>
+          Método de envío
+        </div>
+        <div class="radio-grid">
+          <label class="radio-card" id="card-correo" onclick="seleccionarEnvio('correo', this)">
+            <input type="radio" name="envio" value="correo">
+            <div class="radio-dot"><div class="radio-dot-inner"></div></div>
+            <div class="radio-info">
+              <div class="radio-titulo">Correo Argentino</div>
+              <div class="radio-desc">Envío a domicilio. Estimado 5 a 10 días hábiles según destino.</div>
+            </div>
+          </label>
+          <label class="radio-card" id="card-andreani" onclick="seleccionarEnvio('andreani', this)">
+            <input type="radio" name="envio" value="andreani">
+            <div class="radio-dot"><div class="radio-dot-inner"></div></div>
+            <div class="radio-info">
+              <div class="radio-titulo">Andreani</div>
+              <div class="radio-desc">Envío a domicilio o sucursal. Estimado 3 a 7 días hábiles.</div>
+            </div>
+            <span class="radio-badge">Recomendado</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- 4. MÉTODO DE PAGO -->
+      <div class="form-section">
+        <div class="section-titulo">
+          <div class="section-num">4</div>
+          Método de pago
+        </div>
+        <div class="radio-grid">
+          <label class="radio-card" id="card-transferencia" onclick="seleccionarPago('transferencia', this)">
+            <input type="radio" name="pago" value="transferencia">
+            <div class="radio-dot"><div class="radio-dot-inner"></div></div>
+            <div class="radio-info">
+              <div class="radio-titulo">Transferencia bancaria</div>
+              <div class="radio-desc">Transferí el monto exacto y envianos el comprobante por WhatsApp.</div>
+            </div>
+          </label>
+          <label class="radio-card" id="card-mp" onclick="seleccionarPago('mp', this)">
+            <input type="radio" name="pago" value="mp">
+            <div class="radio-dot"><div class="radio-dot-inner"></div></div>
+            <div class="radio-info">
+              <div class="radio-titulo">Tarjeta / Mercado Pago</div>
+              <div class="radio-desc">Débito, crédito o dinero en cuenta. 3 cuotas sin interés disponibles.</div>
+            </div>
+            <span class="radio-badge">Pago online</span>
+          </label>
+        </div>
+
+        <!-- DETALLE TRANSFERENCIA -->
+        <div class="pago-detalle" id="detalle-transferencia">
+          <p>
+            Una vez confirmado el pedido, te vamos a redirigir a WhatsApp para que nos enviés el comprobante.<br><br>
+            <strong>Alias:</strong> luzbelito.mp &nbsp;|&nbsp; <strong>CVU:</strong> se te va a mostrar al confirmar
+          </p>
+        </div>
+
+        <!-- DETALLE MP -->
+        <div class="pago-detalle" id="detalle-mp">
+          <p>
+            Serás redirigido al checkout seguro de Mercado Pago para completar tu pago con tarjeta de débito, crédito o dinero en cuenta.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RESUMEN LATERAL -->
+    <div class="checkout-resumen">
+      <div class="resumen-titulo">Tu pedido</div>
+      <div class="resumen-items" id="resumen-items">
+        <!-- render con JS -->
+      </div>
+      <div class="resumen-sep"></div>
+      <div class="resumen-linea"><span>Subtotal</span><span id="resumen-subtotal">—</span></div>
+      <div class="resumen-linea"><span>Envío</span><span>A calcular</span></div>
+      <div class="resumen-total">
+        <span class="label">Total</span>
+        <span class="valor" id="resumen-total">—</span>
+      </div>
+      <button class="btn-confirmar" id="btn-confirmar" onclick="confirmarPedido()">
+        Confirmar pedido →
+      </button>
+      <button class="btn-volver-carrito" onclick="window.location.href='carrito.html'">← Volver al carrito</button>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-bottom">
+    <span>© 2025 LUZBELITO — Todos los derechos reservados</span>
+    <span>Rock Nacional</span>
+  </div>
+</footer>
+
+<script>
+// ---- HELPERS ----
+function getCarrito() {
+  try { return JSON.parse(localStorage.getItem('luzbelito_carrito')) || []; }
+  catch(e) { return []; }
+}
+function formatPrecio(n) {
+  return '$' + n.toLocaleString('es-AR');
+}
+
+// ---- ESTADO ----
+let envioSeleccionado = null;
+let pagoSeleccionado = null;
+
+// ---- RENDER RESUMEN ----
+function renderResumen() {
+  const carrito = getCarrito();
+  if (carrito.length === 0) {
+    window.location.href = 'carrito.html';
+    return;
+  }
+  const subtotal = carrito.reduce((s, i) => s + (i.precio_num * i.cantidad), 0);
+
+  document.getElementById('resumen-items').innerHTML = carrito.map(item => `
+    <div class="resumen-item">
+      <div class="resumen-item-foto">
+        ${item.foto
+          ? `<img src="${item.foto}" alt="${item.nombre}">`
+          : `<div class="resumen-item-foto-ph">L</div>`}
+      </div>
+      <div class="resumen-item-info">
+        <div class="resumen-item-nombre">${item.nombre}</div>
+        <div class="resumen-item-sub">Talle ${item.talle} · x${item.cantidad}</div>
+      </div>
+      <div class="resumen-item-precio">${formatPrecio(item.precio_num * item.cantidad)}</div>
+    </div>
+  `).join('');
+
+  document.getElementById('resumen-subtotal').textContent = formatPrecio(subtotal);
+  document.getElementById('resumen-total').textContent = formatPrecio(subtotal);
+}
+
+// ---- RADIO SELECTS ----
+function seleccionarEnvio(valor, el) {
+  envioSeleccionado = valor;
+  document.querySelectorAll('[id^="card-"]').forEach(c => {
+    if (c.id.startsWith('card-correo') || c.id.startsWith('card-andreani')) {
+      c.classList.remove('selected');
+    }
+  });
+  el.classList.add('selected');
+}
+
+function seleccionarPago(valor, el) {
+  pagoSeleccionado = valor;
+  document.getElementById('card-transferencia').classList.remove('selected');
+  document.getElementById('card-mp').classList.remove('selected');
+  el.classList.add('selected');
+  document.getElementById('detalle-transferencia').classList.remove('visible');
+  document.getElementById('detalle-mp').classList.remove('visible');
+  if (valor === 'transferencia') document.getElementById('detalle-transferencia').classList.add('visible');
+  if (valor === 'mp') document.getElementById('detalle-mp').classList.add('visible');
+}
+
+// ---- VALIDACIÓN ----
+function validarCampo(id) {
+  const el = document.getElementById(id);
+  if (!el.value.trim()) {
+    el.classList.add('error');
+    return false;
+  }
+  el.classList.remove('error');
+  return true;
+}
+function validarEmail(id) {
+  const el = document.getElementById(id);
+  const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value.trim());
+  el.classList.toggle('error', !ok);
+  return ok;
+}
+
+function validarTodo() {
+  const campos = ['nombre','apellido','email','telefono','calle','ciudad','provincia','cp'];
+  let ok = campos.every(id => {
+    if (id === 'email') return validarEmail(id);
+    return validarCampo(id);
+  });
+  if (!envioSeleccionado) { alert('Por favor seleccioná un método de envío.'); ok = false; }
+  if (!pagoSeleccionado) { alert('Por favor seleccioná un método de pago.'); ok = false; }
+  return ok;
+}
+
+// ---- CONFIRMAR PEDIDO ----
+async function confirmarPedido() {
+  if (!validarTodo()) return;
+
+  const carrito = getCarrito();
+  const comprador = {
+    nombre: document.getElementById('nombre').value.trim() + ' ' + document.getElementById('apellido').value.trim(),
+    email: document.getElementById('email').value.trim(),
+    telefono: document.getElementById('telefono').value.trim(),
+    direccion: [
+      document.getElementById('calle').value.trim(),
+      document.getElementById('piso').value.trim(),
+      document.getElementById('ciudad').value.trim(),
+      document.getElementById('provincia').value.trim(),
+      'CP ' + document.getElementById('cp').value.trim()
+    ].filter(Boolean).join(', ')
+  };
+
+  if (pagoSeleccionado === 'transferencia') {
+    // Armar mensaje de WhatsApp
+    const lineas = carrito.map(i =>
+      `• ${i.nombre} (${i.bandaNombre}) — Talle ${i.talle} x${i.cantidad} = ${formatPrecio(i.precio_num * i.cantidad)}`
+    );
+    const subtotal = carrito.reduce((s, i) => s + i.precio_num * i.cantidad, 0);
+    const msg = [
+      '¡Hola! Quiero hacer un pedido en LUZBELITO:',
+      '',
+      ...lineas,
+      '',
+      `*Total: ${formatPrecio(subtotal)}*`,
+      '',
+      `*Envío:* ${envioSeleccionado === 'correo' ? 'Correo Argentino' : 'Andreani'}`,
+      `*Dirección:* ${comprador.direccion}`,
+      `*Nombre:* ${comprador.nombre}`,
+      `*Email:* ${comprador.email}`,
+    ].join('\n');
+
+    const url = `https://wa.me/543541608308?text=${encodeURIComponent(msg)}`;
+    localStorage.removeItem('luzbelito_carrito');
+    window.location.href = url;
+
+  } else if (pagoSeleccionado === 'mp') {
+    // Llamar a la función Netlify de MercadoPago
+    document.getElementById('loadingOverlay').classList.add('visible');
+    document.getElementById('btn-confirmar').disabled = true;
+
+    try {
+      const resp = await fetch('/.netlify/functions/crear-preferencia', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          items: carrito.map(i => ({
+            nombre: `${i.nombre} — ${i.bandaNombre}`,
+            talle: i.talle,
+            cantidad: i.cantidad,
+            precio_num: i.precio_num
+          })),
+          comprador,
+          envio: envioSeleccionado
+        })
+      });
+
+      const data = await resp.json();
+
+      if (!resp.ok || !data.init_point) {
+        throw new Error(data.error || 'Error al crear el pago');
+      }
+
+      localStorage.removeItem('luzbelito_carrito');
+      // En producción usar init_point, en pruebas sandbox_init_point
+      window.location.href = data.init_point;
+
+    } catch (err) {
+      document.getElementById('loadingOverlay').classList.remove('visible');
+      document.getElementById('btn-confirmar').disabled = false;
+      alert('Hubo un error al procesar el pago. Intentá de nuevo o elegí transferencia.');
+      console.error(err);
+    }
+  }
+}
+
+// ---- MOBILE MENU ----
+function toggleMenu() {
+  const menu = document.getElementById('mobileMenu');
+  const ham = document.getElementById('hamburger');
+  menu.classList.toggle('open');
+  ham.classList.toggle('open');
+  document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+}
+function closeMobileMenu() {
+  document.getElementById('mobileMenu').classList.remove('open');
+  document.getElementById('hamburger').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ---- INIT ----
+renderResumen();
+
+// Limpiar error on input
+document.querySelectorAll('.form-input').forEach(el => {
+  el.addEventListener('input', () => el.classList.remove('error'));
+});
+</script>
+</body>
+</html>
