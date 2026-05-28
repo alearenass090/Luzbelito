@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LUZBELITO — Elegí tu banda</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
@@ -1001,7 +1001,14 @@ nav {
 
 <script>
 
-// ---- DATA ----
+// ---- SUPABASE ----
+const { createClient } = supabase;
+const sb = createClient(
+  'https://tosixibqaacbumifxkou.supabase.co',
+  'sb_publishable_h8q7uzQC_up2ITOryCxzUA_BX-LTsc0'
+);
+
+// ---- DATA ESTÁTICA DE BANDAS ----
 const bandas = {
   redondos: { nombre: 'Patricio Rey y los Redondos', logo: 'Logos/redondos.png' },
   soda:     { nombre: 'Soda Stereo',                 logo: 'Logos/soda.png' },
@@ -1014,36 +1021,47 @@ const bandas = {
   renga:    { nombre: 'La Renga',                    logo: 'Logos/renga.jpg' },
 };
 
-// Cada producto puede tener un array de fotos (rutas relativas).
-// Si fotos está vacío se muestra el placeholder.
-// desc: descripción larga. stock: número para mostrar.
-const productos = [
-  { id: 1,  banda: 'redondos',   nombre: 'Oktubre',                      precio: '$28.000', tag: 'Nuevo',           sizes: ['S','M','L','XL'], stock: 15, desc: 'Remera 100% algodón peinado. Diseño inspirado en el disco Oktubre de los Redondos. Tirada limitada.', fotos: [] },
-  { id: 2,  banda: 'redondos',   nombre: 'Un baión para el ojo idiota',   precio: '$28.000', tag: '',                sizes: ['M','L','XL'],     stock: 8,  desc: 'Remera 100% algodón peinado. Estampa de alta definición.', fotos: [] },
-  { id: 3,  banda: 'redondos',   nombre: 'La Mosca y la Sopa',            precio: '$28.000', tag: 'Último stock',    sizes: ['S','M'],          stock: 2,  desc: 'Remera 100% algodón peinado. Pocas unidades disponibles.', fotos: [] },
-  { id: 4,  banda: 'soda',       nombre: 'Dynamo',                        precio: '$28.000', tag: 'Nuevo',           sizes: ['S','M','L','XL'], stock: 20, desc: 'Remera 100% algodón peinado. Diseño basado en la era Dynamo de Soda Stereo.', fotos: [] },
-  { id: 5,  banda: 'soda',       nombre: 'Nada Personal',                 precio: '$28.000', tag: '',                sizes: ['M','L'],          stock: 10, desc: 'Remera 100% algodón peinado. Clásico absoluto del rock argentino.', fotos: [] },
-  { id: 6,  banda: 'soda',       nombre: 'Me Verás Volver',               precio: '$32.000', tag: 'Edición Limitada',sizes: ['S','M','L','XL'], stock: 5,  desc: 'Remera edición limitada. 100% algodón peinado premium. Numerada.', fotos: [] },
-  { id: 7,  banda: 'babasonicos',nombre: 'Miami',                         precio: '$28.000', tag: 'Nuevo',           sizes: ['S','M','L','XL'], stock: 18, desc: 'Remera 100% algodón peinado. Estampa Miami de Babasónicos.', fotos: [] },
-  { id: 8,  banda: 'babasonicos',nombre: 'Jessico',                       precio: '$28.000', tag: '',                sizes: ['M','L','XL'],     stock: 12, desc: 'Remera 100% algodón peinado. Icónica portada de Jessico.', fotos: [] },
-  { id: 11, banda: 'airbag',     nombre: 'Doce Pasos',                    precio: '$28.000', tag: 'Nuevo',           sizes: ['S','M','L','XL'], stock: 14, desc: 'Remera 100% algodón peinado. Diseño Doce Pasos de Airbag.', fotos: [] },
-  { id: 12, banda: 'airbag',     nombre: 'Por Mil Noches',                precio: '$28.000', tag: '',                sizes: ['M','L','XL'],     stock: 9,  desc: 'Remera 100% algodón peinado. Rock argentino de ley.', fotos: [] },
-  { id: 13, banda: 'callejeros', nombre: 'Rocanroles sin Destino',        precio: '$28.000', tag: 'Nuevo',           sizes: ['S','M','L'],      stock: 11, desc: 'Remera 100% algodón peinado. Homenaje al disco debut de Callejeros.', fotos: [] },
-  { id: 14, banda: 'callejeros', nombre: 'Señales',                       precio: '$28.000', tag: '',                sizes: ['M','L','XL'],     stock: 7,  desc: 'Remera 100% algodón peinado.', fotos: [] },
-  { id: 15, banda: 'pastillas',  nombre: 'El Milagro',                    precio: '$28.000', tag: 'Nuevo',           sizes: ['S','M','L','XL'], stock: 16, desc: 'Remera 100% algodón peinado. Diseño El Milagro de Las Pastillas del Abuelo.', fotos: [] },
-  { id: 16, banda: 'charly',     nombre: 'Clics Modernos',                precio: '$28.000', tag: 'Nuevo',           sizes: ['S','M','L','XL'], stock: 13, desc: 'Remera 100% algodón peinado. Homenaje al legendario Clics Modernos de Charly.', fotos: [] },
-  { id: 17, banda: 'charly',     nombre: 'La Máquina de Hacer Pájaros',   precio: '$30.000', tag: 'Edición Limitada',sizes: ['M','L'],          stock: 3,  desc: 'Remera edición limitada. Homenaje a La Máquina de Hacer Pájaros. Numerada.', fotos: [] },
-  { id: 18, banda: 'piojos',     nombre: 'Ay Ay Ay',                      precio: '$28.000', tag: 'Nuevo',           sizes: ['S','M','L','XL'], stock: 19, desc: 'Remera 100% algodón peinado. Diseño Ay Ay Ay de Los Piojos.', fotos: [] },
-  { id: 19, banda: 'piojos',     nombre: 'Trúkkkos',                      precio: '$28.000', tag: '',                sizes: ['M','L','XL'],     stock: 6,  desc: 'Remera 100% algodón peinado.', fotos: [] },
-  { id: 20, banda: 'renga',      nombre: 'Bailando en una Pata',          precio: '$28.000', tag: 'Nuevo',           sizes: ['S','M','L','XL'], stock: 17, desc: 'Remera 100% algodón peinado. Diseño inspirado en el clásico de La Renga.', fotos: [] },
-  { id: 21, banda: 'renga',      nombre: 'El Revelde',                    precio: '$28.000', tag: '',                sizes: ['M','L','XL'],     stock: 4,  desc: 'Remera 100% algodón peinado.', fotos: [] },
-];
-
 // ---- ESTADO ----
+let productosCache = [];   // todos los productos cargados de Supabase
 let bandaActual = null;
 let productoActual = null;
 let talleSeleccionado = null;
 let cantidad = 1;
+
+// ---- CARGA INICIAL DESDE SUPABASE ----
+async function cargarProductos() {
+  const { data: prods, error: e1 } = await sb
+    .from('productos')
+    .select('*')
+    .eq('activo', true)
+    .order('id');
+
+  if (e1) { console.error('Error cargando productos:', e1); return; }
+
+  const { data: talles, error: e2 } = await sb
+    .from('producto_talles')
+    .select('*');
+
+  if (e2) { console.error('Error cargando talles:', e2); return; }
+
+  // Armar cada producto con sus talles y stock
+  productosCache = prods.map(p => ({
+    id: p.id,
+    banda: p.banda,
+    nombre: p.nombre,
+    precio: p.precio,
+    tag: p.tag || '',
+    desc: p.descripcion || '',
+    fotos: p.fotos || [],
+    sizes: talles
+      .filter(t => t.producto_id === p.id)
+      .map(t => t.talle),
+    stock: talles
+      .filter(t => t.producto_id === p.id)
+      .reduce((acc, t) => acc + t.stock, 0),
+    tallesDetalle: talles.filter(t => t.producto_id === p.id)
+  }));
+}
 
 // ---- VISTAS ----
 function ocultarTodo() {
@@ -1060,7 +1078,7 @@ function mostrarVistaBandas() {
 
 function mostrarVistaProductos(bandaId) {
   const banda = bandas[bandaId];
-  const prods = productos.filter(p => p.banda === bandaId);
+  const prods = productosCache.filter(p => p.banda === bandaId);
 
   document.getElementById('banda-logo-activa').src = banda.logo;
   document.getElementById('banda-nombre-activa').innerHTML = banda.nombre;
@@ -1100,7 +1118,7 @@ function mostrarVistaProductos(bandaId) {
 }
 
 function mostrarVistaDetalle(prodId) {
-  const prod = productos.find(p => p.id === prodId);
+  const prod = productosCache.find(p => p.id === prodId);
   if (!prod) return;
   const banda = bandas[prod.banda];
 
@@ -1202,10 +1220,13 @@ window.addEventListener('popstate', (e) => {
   }
 });
 
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', async () => {
+  await cargarProductos();
+
   const params = new URLSearchParams(window.location.search);
   const banda = params.get('banda');
   const prod = parseInt(params.get('prod'));
+
   if (banda && prod && bandas[banda]) {
     bandaActual = banda;
     history.replaceState({ vista: 'detalle', banda, prod }, '', window.location.search);
