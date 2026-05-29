@@ -1335,5 +1335,250 @@ function closeMobileMenu() {
   document.body.style.overflow = '';
 }
 </script>
+<style>
+/* ── CART POPUP MOBILE FIX ──
+   El popup usa position:fixed pero en mobile quedaba detrás del
+   overflow:hidden del nav o fuera del viewport visible */
+#cart-popup,
+.cart-added-popup,
+[id*="popup"],
+[class*="cart-popup"],
+[class*="added-popup"] {
+  /* forzar visibilidad en mobile */
+  z-index: 99999 !important;
+}
+
+/* Estilo del popup (si el JS lo crea dinámicamente) */
+.lz-cart-toast {
+  position: fixed !important;
+  top: 70px;
+  left: 16px;
+  right: auto;
+  z-index: 99999;
+  background: var(--bordo);
+  color: var(--cream);
+  padding: 14px 20px;
+  font-family: var(--sans);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s, transform 0.35s;
+  transform: translateY(-8px);
+  min-width: 240px;
+  max-width: calc(100vw - 32px);
+  box-shadow: 0 8px 32px rgba(107,26,42,0.28);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.lz-cart-toast::before { content: '✓'; font-size: 14px; font-weight: 700; flex-shrink: 0; }
+.lz-cart-toast.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+@media (max-width: 900px) {
+  .lz-cart-toast {
+    top: auto !important;
+    bottom: 88px !important;
+    left: 16px !important;
+    right: 16px !important;
+    min-width: 0 !important;
+    font-size: 11px;
+    justify-content: center;
+  }
+}
+
+/* ── RESPONSIVE BANDAS ── */
+@media (max-width: 900px) {
+  nav { padding: 12px 20px !important; }
+  #view-bandas, #view-productos { padding: 36px 20px 60px !important; }
+  #view-detalle { padding: 28px 20px 60px !important; }
+
+  .bands-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 24px 14px !important;
+  }
+  .band-circle { width: 90px !important; height: 90px !important; }
+  .band-name { font-size: 10px !important; }
+
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 14px !important;
+  }
+  .product-img { aspect-ratio: 1/1 !important; } /* cuadrada en mobile */
+
+  /* Detalle: stack vertical */
+  .detalle-grid { grid-template-columns: 1fr !important; gap: 28px !important; }
+  .detalle-galeria { grid-template-columns: 1fr !important; }
+  .galeria-thumbs {
+    flex-direction: row !important;
+    overflow-x: auto;
+    gap: 8px !important;
+    padding-bottom: 4px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .galeria-thumb { width: 56px !important; height: 56px !important; flex-shrink: 0; }
+  .galeria-principal { aspect-ratio: 1/1 !important; }
+
+  .talles-grid { gap: 6px !important; }
+  .talle-btn { width: 44px !important; height: 44px !important; font-size: 11px !important; }
+
+  .btn-agregar { padding: 16px !important; }
+}
+
+@media (max-width: 480px) {
+  .bands-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 20px 12px !important; }
+  .band-circle { width: 100px !important; height: 100px !important; }
+  .band-name { font-size: 10px !important; }
+
+  .products-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
+  .product-name { font-size: 13px !important; }
+
+  /* Breadcrumb en mobile */
+  .breadcrumb { font-size: 10px !important; flex-wrap: wrap; gap: 4px !important; }
+
+  /* Header productos: stackear */
+  .productos-header { flex-direction: column !important; align-items: flex-start !important; gap: 14px !important; }
+
+  /* Cantidad control: más grande para touch */
+  .cantidad-btn { width: 44px !important; height: 44px !important; font-size: 22px !important; }
+  .cantidad-num { height: 44px !important; width: 52px !important; }
+
+  .newsletter-input { font-size: 16px !important; } /* evita zoom iOS */
+}
+
+/* ── PRODUCT HOVER BTN: siempre visible en touch ──
+   En mobile no hay hover, el botón "Agregar" debe verse siempre */
+@media (max-width: 900px) {
+  .product-hover-overlay { background: rgba(26,20,16,0.03) !important; }
+  .product-hover-btn {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    font-size: 9px !important;
+    padding: 10px 8px !important;
+  }
+}
+
+/* ── WHATSAPP FLOTANTE ── */
+.wa-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  text-decoration: none;
+}
+.wa-float-bubble {
+  background: #fff;
+  color: #1a1410;
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  padding: 8px 14px;
+  border-radius: 20px 20px 4px 20px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(8px);
+  transition: opacity 0.3s, transform 0.3s;
+  pointer-events: none;
+}
+.wa-float:hover .wa-float-bubble { opacity: 1; transform: translateX(0); }
+.wa-float-btn {
+  width: 52px; height: 52px;
+  background: #25D366;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 20px rgba(37,211,102,0.35);
+  transition: transform 0.2s, box-shadow 0.2s;
+  flex-shrink: 0;
+}
+.wa-float:hover .wa-float-btn { transform: scale(1.08); box-shadow: 0 6px 28px rgba(37,211,102,0.45); }
+.wa-float-btn svg { width: 26px; height: 26px; fill: #fff; }
+
+@media (max-width: 480px) {
+  .wa-float { bottom: 16px; right: 16px; }
+  .wa-float-btn { width: 48px; height: 48px; }
+  .wa-float-bubble { display: none; }
+}
+</style>
+
+<!-- WHATSAPP FLOTANTE -->
+<a class="wa-float" href="https://wa.me/5493541608308" target="_blank" rel="noopener" aria-label="Contactar por WhatsApp">
+  <span class="wa-float-bubble">¡Hablanos por WhatsApp!</span>
+  <span class="wa-float-btn">
+    <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+      <path d="M16.002 2C8.28 2 2 8.28 2 16c0 2.478.655 4.8 1.8 6.808L2 30l7.394-1.77A13.94 13.94 0 0016.002 30C23.72 30 30 23.72 30 16S23.72 2 16.002 2zm0 25.5a11.44 11.44 0 01-5.836-1.6l-.418-.248-4.39 1.05 1.077-4.274-.272-.437A11.46 11.46 0 014.5 16c0-6.348 5.154-11.5 11.502-11.5S27.5 9.652 27.5 16 22.35 27.5 16.002 27.5zm6.29-8.59c-.345-.172-2.04-1.006-2.356-1.12-.316-.115-.546-.172-.776.172-.23.345-.89 1.12-1.09 1.35-.2.23-.4.258-.745.086-.345-.172-1.456-.537-2.773-1.712-1.025-.916-1.716-2.047-1.917-2.392-.2-.345-.022-.531.15-.703.155-.155.345-.403.518-.604.172-.2.23-.345.345-.575.115-.23.057-.432-.029-.604-.086-.172-.776-1.87-1.063-2.56-.28-.672-.563-.58-.776-.59l-.66-.011c-.23 0-.604.086-.92.432-.316.345-1.207 1.178-1.207 2.874 0 1.696 1.235 3.334 1.407 3.564.172.23 2.43 3.71 5.888 5.204.823.355 1.465.567 1.965.726.826.263 1.578.226 2.172.137.662-.099 2.04-.834 2.328-1.638.287-.804.287-1.493.2-1.638-.086-.144-.316-.23-.66-.402z"/>
+    </svg>
+  </span>
+</a>
+
+<script>
+/*
+ * PATCH coleccion.html
+ * ─────────────────────────────────────────────────────────────
+ * 1. Reemplaza la función mostrarToast (o showCartPopup) original
+ *    para que el popup funcione en mobile
+ * 2. Asegura que el contador del nav se actualice al cargar
+ * ─────────────────────────────────────────────────────────────
+ */
+
+// ── Toast helper (reemplaza el inline si existe) ──
+window._lzToastTimer = null;
+
+function mostrarToastCarrito(msg) {
+  // Reutilizar o crear el toast
+  var toast = document.getElementById('lz-cart-toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'lz-cart-toast';
+    toast.className = 'lz-cart-toast';
+    document.body.appendChild(toast);
+  }
+  toast.textContent = msg || '¡Agregado al carrito!';
+  toast.classList.add('show');
+  clearTimeout(window._lzToastTimer);
+  window._lzToastTimer = setTimeout(function() {
+    toast.classList.remove('show');
+  }, 2800);
+}
+
+// Parchar la función agregarAlCarrito si ya está definida arriba
+// para inyectar el toast nuevo.
+// Esperamos a que el DOM y los scripts carguen completamente:
+window.addEventListener('DOMContentLoaded', function() {
+  var originalAgregar = window.agregarAlCarrito;
+  if (typeof originalAgregar === 'function') {
+    window.agregarAlCarrito = function() {
+      originalAgregar.apply(this, arguments);
+      // El toast original puede no aparecer en mobile; forzamos el nuestro
+      setTimeout(function() {
+        var carrito = JSON.parse(localStorage.getItem('luzbelito_carrito') || '[]');
+        var total = carrito.reduce(function(s, i) { return s + (i.cantidad || 1); }, 0);
+        mostrarToastCarrito('¡Agregado al carrito!');
+        // Actualizar nav
+        var navBtn = document.getElementById('nav-cart-btn');
+        if (navBtn) navBtn.textContent = total > 0 ? 'Carrito (' + total + ')' : 'Carrito — 0';
+      }, 50);
+    };
+  }
+
+  // Actualizar contador al cargar la página
+  try {
+    var carrito = JSON.parse(localStorage.getItem('luzbelito_carrito')) || [];
+    var total = carrito.reduce(function(s, i) { return s + (i.cantidad || 1); }, 0);
+    var navBtn = document.getElementById('nav-cart-btn');
+    if (navBtn) navBtn.textContent = total > 0 ? 'Carrito (' + total + ')' : 'Carrito — 0';
+  } catch(e) {}
+});
+</script>
+
 </body>
 </html>
