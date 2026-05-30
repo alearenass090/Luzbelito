@@ -869,6 +869,7 @@ footer {
   <a href="coleccion.html" onclick="closeMobileMenu()">Colección</a>
   <a href="nosotros.html" onclick="closeMobileMenu()">Nosotros</a>
   <div class="mobile-menu-slogan">Solos y de noche</div>
+  <button class="nav-cart" onclick="toggleCart(); closeMobileMenu()">Carrito — <span id="mobile-cart-count">0</span></button>
 </div>
 
 <!-- TICKER -->
@@ -895,7 +896,7 @@ footer {
   </ul>
   <div class="nav-actions">
     <button class="nav-btn">Buscar</button>
-    <button class="nav-cart">Carrito — 0</button>
+    <button class="nav-cart" onclick="toggleCart()">Carrito — <span id="cart-count">0</span></button>
   </div>
   <button class="hamburger" id="hamburger" aria-label="Menú" onclick="toggleMenu()">
     <span></span><span></span><span></span>
