@@ -42,7 +42,8 @@ nav { position: sticky; top: 0; z-index: 100; display: flex; align-items: center
 .nav-cart:hover { color: var(--bordo); border-color: var(--bordo); }
 
 /* HAMBURGER */
-.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+.mobile-cart-visible { display: none; }
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; flex-shrink: 0; }
 .hamburger span { display: block; width: 24px; height: 1px; background: var(--text); transition: all 0.3s; }
 .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(4px,4px); }
 .hamburger.open span:nth-child(2) { opacity: 0; }
@@ -114,6 +115,21 @@ footer { background: var(--text); color: var(--cream); padding: 48px; }
   nav { padding: 14px 24px; }
   .nav-links, .nav-actions { display: none; }
   .hamburger { display: flex; }
+  .mobile-cart-visible {
+    display: flex !important;
+    align-items: center;
+    border: 0.5px solid var(--border-strong);
+    padding: 6px 12px;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    background: none;
+    font-family: var(--sans);
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
   .page { padding: 40px 24px 80px; }
   .carrito-layout { grid-template-columns: 1fr; }
   .carrito-resumen { position: static; }
@@ -156,6 +172,7 @@ footer { background: var(--text); color: var(--cream); padding: 48px; }
   <div class="nav-actions">
     <button class="nav-cart" id="nav-cart-btn" onclick="window.location.href='carrito.html'">Carrito — 0</button>
   </div>
+  <button class="mobile-cart-visible" onclick="window.location.href='carrito.html'">Carrito (<span id="cart-count-mobile">0</span>)</button>
   <button class="hamburger" id="hamburger" onclick="toggleMenu()">
     <span></span><span></span><span></span>
   </button>
@@ -189,8 +206,10 @@ function updateCartCounts() {
   const total = carrito.reduce((s, i) => s + i.cantidad, 0);
   const navBtn = document.getElementById('nav-cart-btn');
   const mobileCount = document.getElementById('mobile-cart-count');
+  const mobileCountNav = document.getElementById('cart-count-mobile');
   if (navBtn) navBtn.textContent = total > 0 ? `Carrito (${total})` : 'Carrito — 0';
   if (mobileCount) mobileCount.textContent = total;
+  if (mobileCountNav) mobileCountNav.textContent = total;
 }
 
 function renderCarrito() {

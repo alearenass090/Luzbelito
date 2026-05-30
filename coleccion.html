@@ -141,6 +141,7 @@ nav {
 .nav-cart:hover { color: var(--bordo); border-color: var(--bordo); }
 
 /* HAMBURGER */
+.mobile-cart-visible { display: none; }
 .hamburger {
   display: none;
   flex-direction: column;
@@ -793,6 +794,7 @@ nav {
   nav { padding: 14px 24px; }
   .nav-links, .nav-actions { display: none; }
   .hamburger { display: flex; }
+  .mobile-cart-visible { display: flex !important; align-items: center; border: 0.5px solid var(--border-strong); padding: 6px 12px; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); background: none; font-family: var(--sans); cursor: pointer; white-space: nowrap; flex-shrink: 0; }
   #view-bandas, #view-productos { padding: 40px 24px 60px; }
   .bands-grid { grid-template-columns: repeat(3, 1fr); gap: 28px 16px; }
   .band-circle { width: 100px; height: 100px; }
@@ -842,6 +844,7 @@ nav {
   <div class="nav-actions">
     <button class="nav-cart" id="nav-cart-btn" onclick="window.location.href='carrito.html'">Carrito — 0</button>
   </div>
+  <button class="mobile-cart-visible" onclick="window.location.href='carrito.html'">Carrito</button>
   <button class="hamburger" id="hamburger" aria-label="Menú" onclick="toggleMenu()">
     <span></span><span></span><span></span>
   </button>
