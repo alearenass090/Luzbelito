@@ -143,7 +143,12 @@ nav.scrolled {
   font-family: var(--sans);
 }
 .nav-cart:hover { color: var(--bordo); border-color: var(--bordo); }
-<button class="nav-cart mobile-cart-visible" onclick="window.location.href='carrito.html'">Carrito — <span id="cart-count">0</span></button>
+
+/* CARRITO MOBILE (oculto en desktop) */
+.mobile-cart-visible {
+  display: none;
+}
+
 /* HAMBURGER */
 .hamburger {
   display: none;
@@ -153,6 +158,7 @@ nav.scrolled {
   background: none;
   border: none;
   padding: 4px;
+  flex-shrink: 0;
 }
 .hamburger span {
   display: block;
@@ -463,9 +469,18 @@ footer {
 /* ══════════════════════════════
    RESPONSIVE
 ══════════════════════════════ */
-
-  /* NAV */
 @media (max-width: 900px) {
+  /* NAV */
+  nav {
+    top: 0 !important;
+    padding: 12px 20px !important;
+    background: rgba(245,240,232,0.97) !important;
+    border-bottom: 0.5px solid var(--border) !important;
+    backdrop-filter: blur(8px);
+  }
+  .nav-links { display: none; }
+  .nav-actions { display: none; }
+  .hamburger { display: flex; }
   .mobile-cart-visible {
     display: flex !important;
     align-items: center;
@@ -479,21 +494,8 @@ footer {
     font-family: var(--sans);
     cursor: pointer;
     white-space: nowrap;
+    flex-shrink: 0;
   }
-}
-
-
-
-  nav {
-    top: 0 !important;
-    padding: 12px 20px !important;
-    background: rgba(245,240,232,0.97) !important;
-    border-bottom: 0.5px solid var(--border) !important;
-    backdrop-filter: blur(8px);
-  }
-  .nav-links { display: none; }
-  .nav-actions { display: none; }
-  .hamburger { display: flex; }
 
   /* HERO */
   .hero {
@@ -637,6 +639,7 @@ footer {
   <div class="nav-actions">
     <button class="nav-cart" onclick="window.location.href='carrito.html'">Carrito — <span id="cart-count">0</span></button>
   </div>
+  <button class="mobile-cart-visible" onclick="window.location.href='carrito.html'">Carrito (<span id="cart-count-mobile">0</span>)</button>
   <button class="hamburger" id="hamburger" aria-label="Menú" onclick="toggleMenu()">
     <span></span><span></span><span></span>
   </button>
@@ -788,8 +791,10 @@ footer {
       var carrito = JSON.parse(localStorage.getItem('luzbelito_carrito')) || [];
       var total = carrito.reduce(function(s, i) { return s + (i.cantidad || 1); }, 0);
       var countEl = document.getElementById('cart-count');
+      var countMobileEl = document.getElementById('cart-count-mobile');
       var mobileCountEl = document.getElementById('mobile-cart-count');
       if (countEl) countEl.textContent = total;
+      if (countMobileEl) countMobileEl.textContent = total;
       if (mobileCountEl) mobileCountEl.textContent = total;
     } catch(e) {}
   })();
