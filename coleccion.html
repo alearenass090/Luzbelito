@@ -920,7 +920,7 @@ nav {
 
       <div class="band-item" onclick="verBanda('piojos')">
         <div class="band-circle">
-          <img src="Logos/piojos.png" alt="Los Piojos">
+          <img src="Logos/piojos.jpg" alt="Los Piojos">
           <div class="band-circle-overlay"></div>
         </div>
         <div class="band-name">Los Piojos</div>
@@ -1015,11 +1015,11 @@ const sb = createClient(
 const bandas = {
   redondos: { nombre: 'Patricio Rey y los Redondos', logo: 'Logos/redondos.png' },
   soda:     { nombre: 'Soda Stereo',                 logo: 'Logos/soda.png' },
-  babasonicos: { nombre: 'Babasónicos',              logo: 'Logos/babasonicos.jpg' },
-  airbag:   { nombre: 'Airbag',                      logo: 'Logos/airbag.png' },
+  babasonicos: { nombre: 'Babasónicos',              logo: 'Logos/babasonicos.png' },
+  airbag:   { nombre: 'Airbag',                      logo: 'Logos/airbag.jpg' },
   callejeros: { nombre: 'Callejeros',                logo: 'Logos/cjs.png' },
   pastillas: { nombre: 'Las Pastillas del Abuelo',   logo: 'Logos/lpda.png' },
-  charly:   { nombre: 'Charly García',               logo: 'Logos/charly.png' },
+  charly:   { nombre: 'Charly García',               logo: 'Logos/charly.jpg' },
   piojos:   { nombre: 'Los Piojos',                  logo: 'Logos/piojos.jpg' },
   renga:    { nombre: 'La Renga',                    logo: 'Logos/renga.jpg' },
 };
@@ -1179,9 +1179,10 @@ function mostrarVistaDetalle(prodId) {
   }
 
   // Talles
-  document.getElementById('talles-grid').innerHTML = prod.sizes.map(s => `
-    <button class="talle-btn" onclick="seleccionarTalle('${s}', this)">${s}</button>
-  `).join('');
+  document.getElementById('talles-grid').innerHTML = prod.tallesDetalle.map(t => {
+    const agotado = t.stock === 0;
+    return `<button class="talle-btn${agotado ? ' agotado' : ''}" ${agotado ? 'disabled' : ''} onclick="seleccionarTalle('${t.talle}', this)">${t.talle}</button>`;
+  }).join('');
 
   ocultarTodo();
   document.getElementById('view-detalle').style.display = 'block';
@@ -1256,14 +1257,37 @@ function cambiarFoto(idx) {
 
 function seleccionarTalle(talle, btn) {
   talleSeleccionado = talle;
+  cantidad = 1;
+  document.getElementById('cantidad-num').textContent = '1';
   document.getElementById('talle-seleccionado').textContent = talle;
   document.querySelectorAll('.talle-btn').forEach(b => b.classList.remove('selected'));
   btn.classList.add('selected');
 }
 
 function cambiarCantidad(delta) {
-  cantidad = Math.max(1, Math.min(productoActual ? productoActual.stock : 10, cantidad + delta));
+  let stockMax = productoActual ? productoActual.stock : 10;
+  if (talleSeleccionado && productoActual) {
+    const td = productoActual.tallesDetalle.find(t => t.talle === talleSeleccionado);
+    if (td) stockMax = td.stock;
+  }
+  cantidad = Math.max(1, Math.min(stockMax, cantidad + delta));
   document.getElementById('cantidad-num').textContent = cantidad;
+}
+
+// ---- TOAST ----
+var _lzToastTimer = null;
+function mostrarToastCarrito(msg) {
+  var toast = document.getElementById('lz-cart-toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'lz-cart-toast';
+    toast.className = 'lz-cart-toast';
+    document.body.appendChild(toast);
+  }
+  toast.textContent = msg || '¡Agregado al carrito!';
+  toast.classList.add('show');
+  clearTimeout(_lzToastTimer);
+  _lzToastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2800);
 }
 
 // ---- CARRITO (localStorage) ----
@@ -1296,8 +1320,10 @@ function agregarAlCarrito() {
   const carrito = getCarrito();
   const key = `${productoActual.id}_${talleSeleccionado}`;
   const existe = carrito.find(i => i.key === key);
+  const talleData = productoActual.tallesDetalle.find(t => t.talle === talleSeleccionado);
+  const stockMax = talleData ? talleData.stock : productoActual.stock;
   if (existe) {
-    existe.cantidad += cantidad;
+    existe.cantidad = Math.min(stockMax, existe.cantidad + cantidad);
   } else {
     const banda = bandas[productoActual.banda];
     carrito.push({
@@ -1307,7 +1333,7 @@ function agregarAlCarrito() {
       banda: productoActual.banda,
       bandaNombre: banda ? banda.nombre : '',
       talle: talleSeleccionado,
-      cantidad,
+      cantidad: Math.min(stockMax, cantidad),
       precio: productoActual.precio,
       precio_num: precioNum(productoActual.precio),
       foto: productoActual.fotos && productoActual.fotos.length ? productoActual.fotos[0] : null
@@ -1315,6 +1341,7 @@ function agregarAlCarrito() {
   }
   saveCarrito(carrito);
   actualizarNavCarrito();
+  mostrarToastCarrito('¡' + productoActual.nombre + ' agregado!');
   const btn = document.querySelector('.btn-agregar');
   const orig = btn.textContent;
   btn.textContent = '✓ Agregado';
@@ -1523,65 +1550,6 @@ function closeMobileMenu() {
   </span>
 </a>
 
-<script>
-/*
- * PATCH coleccion.html
- * ─────────────────────────────────────────────────────────────
- * 1. Reemplaza la función mostrarToast (o showCartPopup) original
- *    para que el popup funcione en mobile
- * 2. Asegura que el contador del nav se actualice al cargar
- * ─────────────────────────────────────────────────────────────
- */
-
-// ── Toast helper (reemplaza el inline si existe) ──
-window._lzToastTimer = null;
-
-function mostrarToastCarrito(msg) {
-  // Reutilizar o crear el toast
-  var toast = document.getElementById('lz-cart-toast');
-  if (!toast) {
-    toast = document.createElement('div');
-    toast.id = 'lz-cart-toast';
-    toast.className = 'lz-cart-toast';
-    document.body.appendChild(toast);
-  }
-  toast.textContent = msg || '¡Agregado al carrito!';
-  toast.classList.add('show');
-  clearTimeout(window._lzToastTimer);
-  window._lzToastTimer = setTimeout(function() {
-    toast.classList.remove('show');
-  }, 2800);
-}
-
-// Parchar la función agregarAlCarrito si ya está definida arriba
-// para inyectar el toast nuevo.
-// Esperamos a que el DOM y los scripts carguen completamente:
-window.addEventListener('DOMContentLoaded', function() {
-  var originalAgregar = window.agregarAlCarrito;
-  if (typeof originalAgregar === 'function') {
-    window.agregarAlCarrito = function() {
-      originalAgregar.apply(this, arguments);
-      // El toast original puede no aparecer en mobile; forzamos el nuestro
-      setTimeout(function() {
-        var carrito = JSON.parse(localStorage.getItem('luzbelito_carrito') || '[]');
-        var total = carrito.reduce(function(s, i) { return s + (i.cantidad || 1); }, 0);
-        mostrarToastCarrito('¡Agregado al carrito!');
-        // Actualizar nav
-        var navBtn = document.getElementById('nav-cart-btn');
-        if (navBtn) navBtn.textContent = total > 0 ? 'Carrito (' + total + ')' : 'Carrito — 0';
-      }, 50);
-    };
-  }
-
-  // Actualizar contador al cargar la página
-  try {
-    var carrito = JSON.parse(localStorage.getItem('luzbelito_carrito')) || [];
-    var total = carrito.reduce(function(s, i) { return s + (i.cantidad || 1); }, 0);
-    var navBtn = document.getElementById('nav-cart-btn');
-    if (navBtn) navBtn.textContent = total > 0 ? 'Carrito (' + total + ')' : 'Carrito — 0';
-  } catch(e) {}
-});
-</script>
 
 </body>
 </html>

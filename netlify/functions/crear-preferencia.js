@@ -1,10 +1,35 @@
 exports.handler = async (event) => {
-  if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, body: 'Method Not Allowed' };
+  const corsHeaders = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  };
+
+  if (event.httpMethod === 'OPTIONS') {
+    return { statusCode: 200, headers: corsHeaders, body: '' };
   }
 
-  const { items, comprador } = JSON.parse(event.body);
+  if (event.httpMethod !== 'POST') {
+    return { statusCode: 405, headers: corsHeaders, body: 'Method Not Allowed' };
+  }
+
+  let body;
+  try {
+    body = JSON.parse(event.body);
+  } catch {
+    return { statusCode: 400, headers: corsHeaders, body: JSON.stringify({ error: 'Body inválido' }) };
+  }
+
+  const { items, comprador, envio } = body;
+
+  if (!items || !items.length || !comprador) {
+    return { statusCode: 400, headers: corsHeaders, body: JSON.stringify({ error: 'Datos incompletos' }) };
+  }
+
   const accessToken = process.env.MP_ACCESS_TOKEN;
+  if (!accessToken) {
+    return { statusCode: 500, headers: corsHeaders, body: JSON.stringify({ error: 'Token de Mercado Pago no configurado' }) };
+  }
 
   const preferencia = {
     items: items.map(item => ({
@@ -25,6 +50,7 @@ exports.handler = async (event) => {
     auto_return: 'approved',
     statement_descriptor: 'LUZBELITO',
     external_reference: `LUZ-${Date.now()}`,
+    shipments: envio ? { mode: 'not_specified' } : undefined,
   };
 
   try {
@@ -43,16 +69,17 @@ exports.handler = async (event) => {
       console.error('Error MP:', data);
       return {
         statusCode: 500,
+        headers: corsHeaders,
         body: JSON.stringify({ error: 'Error al crear preferencia', detalle: data }),
       };
     }
 
     return {
       statusCode: 200,
-      headers: { 'Access-Control-Allow-Origin': '*' },
+      headers: corsHeaders,
       body: JSON.stringify({
-        init_point: data.init_point,         // producción
-        sandbox_init_point: data.sandbox_init_point, // pruebas
+        init_point: data.init_point,
+        sandbox_init_point: data.sandbox_init_point,
         preference_id: data.id,
       }),
     };
@@ -60,6 +87,7 @@ exports.handler = async (event) => {
     console.error('Error:', err);
     return {
       statusCode: 500,
+      headers: corsHeaders,
       body: JSON.stringify({ error: err.message }),
     };
   }
