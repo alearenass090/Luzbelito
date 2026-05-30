@@ -440,12 +440,32 @@
     // ============================================================
     // HELPERS
     // ============================================================
+    var SUPABASE_URL = 'https://tosixibqaacbumifxkou.supabase.co';
+    var SUPABASE_KEY = 'sb_publishable_h8q7uzQC_up2ITOryCxzUA_BX-LTsc0';
+
     function getCarrito() {
       try { return JSON.parse(localStorage.getItem('luzbelito_carrito')) || []; }
       catch(e) { return []; }
     }
     function formatPrecio(n) {
       return '$' + Number(n).toLocaleString('es-AR');
+    }
+
+    async function guardarPedido(data) {
+      try {
+        await fetch(SUPABASE_URL + '/rest/v1/pedidos', {
+          method: 'POST',
+          headers: {
+            'apikey': SUPABASE_KEY,
+            'Authorization': 'Bearer ' + SUPABASE_KEY,
+            'Content-Type': 'application/json',
+            'Prefer': 'return=minimal'
+          },
+          body: JSON.stringify(data)
+        });
+      } catch(e) {
+        console.warn('No se pudo guardar el pedido:', e);
+      }
     }
 
     // ============================================================
@@ -558,6 +578,23 @@
           '*Nombre:* '    + comprador.nombre,
           '*Email:* '     + comprador.email,
         ].join('\n');
+
+        var numeroPedido = 'LB-' + Date.now();
+        await guardarPedido({
+          numero: numeroPedido,
+          nombre: comprador.nombre,
+          email: comprador.email,
+          telefono: comprador.telefono,
+          direccion: comprador.direccion,
+          envio: envioSeleccionado,
+          metodo_pago: 'transferencia',
+          items: carrito.map(function(i) {
+            return { nombre: i.nombre, bandaNombre: i.bandaNombre || '', talle: i.talle, cantidad: i.cantidad || 1, precio_num: i.precio_num || 0 };
+          }),
+          total: subtotal,
+          estado: 'transferencia_pendiente'
+        });
+
         localStorage.removeItem('luzbelito_carrito');
         window.location.href = 'https://wa.me/5493541608308?text=' + encodeURIComponent(msg);
 
@@ -576,6 +613,19 @@
           });
           var data = await resp.json();
           if (!resp.ok || !data.init_point) throw new Error(data.error || 'Error al crear el pago');
+          localStorage.setItem('luzbelito_pedido_pendiente', JSON.stringify({
+            numero: 'LB-' + Date.now(),
+            nombre: comprador.nombre,
+            email: comprador.email,
+            telefono: comprador.telefono,
+            direccion: comprador.direccion,
+            envio: envioSeleccionado,
+            metodo_pago: 'mercadopago',
+            items: carrito.map(function(i) {
+              return { nombre: i.nombre, bandaNombre: i.bandaNombre || '', talle: i.talle, cantidad: i.cantidad || 1, precio_num: i.precio_num || 0 };
+            }),
+            total: subtotal
+          }));
           localStorage.removeItem('luzbelito_carrito');
           window.location.href = data.init_point;
         } catch(err) {

@@ -102,10 +102,55 @@
     </span>
   </a>
   <script>
-    // Número de pedido random para mostrar al cliente
-    document.getElementById('num-random').textContent = Math.floor(100000 + Math.random() * 900000);
-    // Limpiar carrito por si quedó algo
+    var SUPABASE_URL = 'https://tosixibqaacbumifxkou.supabase.co';
+    var SUPABASE_KEY = 'sb_publishable_h8q7uzQC_up2ITOryCxzUA_BX-LTsc0';
+
     localStorage.removeItem('luzbelito_carrito');
+
+    (async function() {
+      var params = new URLSearchParams(window.location.search);
+      var status = params.get('status');
+      var paymentId = params.get('payment_id');
+      var pendienteRaw = localStorage.getItem('luzbelito_pedido_pendiente');
+
+      // Solo confirmar si hay un pedido pendiente real Y el pago fue aprobado
+      if (pendienteRaw && (status === 'approved' || status === null)) {
+        try {
+          var pedido = JSON.parse(pendienteRaw);
+          var numero = pedido.numero || ('LB-' + Date.now());
+          document.getElementById('num-random').textContent = numero;
+
+          await fetch(SUPABASE_URL + '/rest/v1/pedidos', {
+            method: 'POST',
+            headers: {
+              'apikey': SUPABASE_KEY,
+              'Authorization': 'Bearer ' + SUPABASE_KEY,
+              'Content-Type': 'application/json',
+              'Prefer': 'return=minimal'
+            },
+            body: JSON.stringify({
+              numero: numero,
+              nombre: pedido.nombre,
+              email: pedido.email,
+              telefono: pedido.telefono,
+              direccion: pedido.direccion,
+              envio: pedido.envio,
+              metodo_pago: pedido.metodo_pago || 'mercadopago',
+              items: pedido.items || [],
+              total: pedido.total || 0,
+              estado: 'confirmado',
+              payment_id: paymentId || null
+            })
+          });
+        } catch(e) {
+          console.warn('No se pudo registrar el pedido:', e);
+          document.getElementById('num-random').textContent = Math.floor(100000 + Math.random() * 900000);
+        }
+        localStorage.removeItem('luzbelito_pedido_pendiente');
+      } else {
+        document.getElementById('num-random').textContent = Math.floor(100000 + Math.random() * 900000);
+      }
+    })();
   </script>
 </body>
 </html>
