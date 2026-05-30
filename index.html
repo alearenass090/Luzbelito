@@ -143,7 +143,7 @@ nav.scrolled {
   font-family: var(--sans);
 }
 .nav-cart:hover { color: var(--bordo); border-color: var(--bordo); }
-
+<button class="nav-cart mobile-cart-visible" onclick="window.location.href='carrito.html'">Carrito — <span id="cart-count">0</span></button>
 /* HAMBURGER */
 .hamburger {
   display: none;
@@ -465,6 +465,12 @@ footer {
 ══════════════════════════════ */
 @media (max-width: 900px) {
   /* NAV */
+.mobile-cart-visible {
+  display: flex !important;
+}
+
+
+
   nav {
     top: 0 !important;
     padding: 12px 20px !important;
