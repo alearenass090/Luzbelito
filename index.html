@@ -1,13 +1,10 @@
 <!DOCTYPE html>
-
 <html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LUZBELITO — Solos y de noche</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 :root {
   --cream: #f5f0e8;
   --cream2: #ede7d9;
@@ -24,9 +21,7 @@
   --serif: 'Playfair Display', Georgia, serif;
   --sans: 'Jost', sans-serif;
 }
-
 html { scroll-behavior: smooth; }
-
 body {
   background: var(--cream);
   color: var(--text);
@@ -34,29 +29,15 @@ body {
   font-weight: 300;
   overflow-x: hidden;
 }
-
 a { color: inherit; text-decoration: none; }
 
-/* MARBLE TEXTURE OVERLAY */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
   background-image:
-    repeating-linear-gradient(
-      118deg,
-      transparent,
-      transparent 40px,
-      rgba(107,26,42,0.015) 40px,
-      rgba(107,26,42,0.015) 41px
-    ),
-    repeating-linear-gradient(
-      62deg,
-      transparent,
-      transparent 80px,
-      rgba(26,20,16,0.012) 80px,
-      rgba(26,20,16,0.012) 81px
-    );
+    repeating-linear-gradient(118deg, transparent, transparent 40px, rgba(107,26,42,0.015) 40px, rgba(107,26,42,0.015) 41px),
+    repeating-linear-gradient(62deg, transparent, transparent 80px, rgba(26,20,16,0.012) 80px, rgba(26,20,16,0.012) 81px);
   pointer-events: none;
   z-index: 0;
 }
@@ -118,10 +99,7 @@ nav.scrolled {
   letter-spacing: 0.08em;
   color: var(--text);
 }
-.nav-logo em {
-  color: var(--bordo);
-  font-style: italic;
-}
+.nav-logo em { color: var(--bordo); font-style: italic; }
 .nav-links {
   display: flex;
   gap: 32px;
@@ -152,18 +130,6 @@ nav.scrolled {
   gap: 16px;
   align-items: center;
 }
-.nav-btn {
-  background: none;
-  border: none;
-  color: var(--text-muted);
-  font-family: var(--sans);
-  font-size: 11px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: color 0.2s;
-}
-.nav-btn:hover { color: var(--text); }
 .nav-cart {
   border: 0.5px solid var(--border-strong);
   padding: 8px 18px;
@@ -213,10 +179,7 @@ nav.scrolled {
   opacity: 0;
   transition: opacity 0.3s;
 }
-.mobile-menu.open {
-  display: flex;
-  opacity: 1;
-}
+.mobile-menu.open { display: flex; opacity: 1; }
 .mobile-menu a {
   font-family: var(--serif);
   font-size: 32px;
@@ -226,6 +189,17 @@ nav.scrolled {
   transition: color 0.2s;
 }
 .mobile-menu a:hover { color: var(--bordo); }
+.mobile-menu .mobile-cart-link {
+  font-family: var(--sans);
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border: 0.5px solid var(--border-strong);
+  padding: 12px 28px;
+  transition: all 0.2s;
+}
+.mobile-menu .mobile-cart-link:hover { color: var(--bordo); border-color: var(--bordo); }
 .mobile-menu-slogan {
   font-size: 11px;
   letter-spacing: 0.25em;
@@ -284,14 +258,6 @@ nav.scrolled {
   margin-bottom: 32px;
   letter-spacing: 0.03em;
 }
-.hero-body {
-  font-size: 14px;
-  line-height: 1.8;
-  color: var(--text-muted);
-  max-width: 340px;
-  margin-bottom: 48px;
-  letter-spacing: 0.02em;
-}
 .hero-cta {
   display: flex;
   gap: 14px;
@@ -326,7 +292,6 @@ nav.scrolled {
   transition: all 0.2s;
 }
 .btn-ghost:hover { color: var(--bordo); border-color: var(--bordo); }
-
 .hero-right {
   background: var(--cream2);
   position: relative;
@@ -335,112 +300,6 @@ nav.scrolled {
   align-items: center;
   justify-content: center;
   min-height: 500px;
-}
-.hero-visual {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  position: relative;
-  padding: 60px;
-}
-.hero-frame {
-  width: 260px;
-  height: 340px;
-  border: 0.5px solid var(--border-strong);
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: float 5s ease-in-out infinite;
-}
-@keyframes float {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-.hero-frame-inner {
-  width: 210px;
-  height: 290px;
-  border: 0.5px solid var(--bordo);
-  opacity: 0.3;
-  position: absolute;
-}
-.hero-frame-content {
-  text-align: center;
-  position: relative;
-  z-index: 2;
-}
-.hero-frame-letter {
-  font-family: var(--serif);
-  font-size: 80px;
-  font-weight: 700;
-  font-style: italic;
-  color: var(--bordo);
-  opacity: 0.12;
-  line-height: 1;
-}
-.hero-frame-sub {
-  font-size: 9px;
-  letter-spacing: 0.4em;
-  text-transform: uppercase;
-  color: var(--text-dim);
-  margin-top: 8px;
-}
-.hero-badge {
-  position: absolute;
-  bottom: -14px;
-  right: -14px;
-  background: var(--bordo);
-  color: var(--cream);
-  padding: 10px 16px;
-  font-size: 9px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  font-weight: 500;
-  font-family: var(--sans);
-}
-.hero-bg-text {
-  position: absolute;
-  font-family: var(--serif);
-  font-size: 120px;
-  font-weight: 700;
-  color: rgba(107,26,42,0.04);
-  letter-spacing: -0.02em;
-  white-space: nowrap;
-  user-select: none;
-  pointer-events: none;
-  bottom: 20px;
-  right: -10px;
-}
-.scroll-hint {
-  margin-top: 52px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--text-dim);
-}
-.scroll-line {
-  width: 36px;
-  height: 0.5px;
-  background: var(--text-dim);
-  position: relative;
-  overflow: hidden;
-}
-.scroll-line::after {
-  content: '';
-  position: absolute;
-  top: 0; left: -100%;
-  width: 100%; height: 100%;
-  background: var(--bordo);
-  animation: slide 2s ease-in-out infinite;
-}
-@keyframes slide {
-  0% { left: -100%; }
-  50%, 100% { left: 100%; }
 }
 
 /* MANIFESTO */
@@ -472,104 +331,7 @@ nav.scrolled {
   line-height: 1.3;
   color: var(--text);
 }
-.manifesto-text em {
-  font-style: italic;
-  color: var(--bordo);
-}
-
-/* CATEGORIES */
-.categories {
-  padding: 90px 80px;
-  position: relative;
-  z-index: 1;
-}
-.section-header {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  margin-bottom: 48px;
-}
-.section-title {
-  font-family: var(--serif);
-  font-size: clamp(26px, 3vw, 36px);
-  font-weight: 400;
-}
-.section-title em { font-style: italic; color: var(--bordo); }
-.section-link {
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transition: color 0.2s;
-}
-.section-link::after { content: '→'; }
-.section-link:hover { color: var(--bordo); }
-
-.cat-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2px;
-  background: var(--border);
-}
-.cat-card {
-  background: var(--cream2);
-  aspect-ratio: 3/4;
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-  display: flex;
-  align-items: flex-end;
-  transition: background 0.3s;
-}
-.cat-card:hover { background: var(--cream3); }
-.cat-geo {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0.08;
-  transition: opacity 0.4s;
-}
-.cat-card:hover .cat-geo { opacity: 0.16; }
-.cat-geo svg { width: 65%; height: 65%; }
-.cat-content {
-  position: relative;
-  z-index: 2;
-  padding: 24px;
-  width: 100%;
-  background: linear-gradient(to top, rgba(237,231,217,0.95) 0%, transparent 100%);
-}
-.cat-eyebrow {
-  font-size: 9px;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--bordo);
-  margin-bottom: 6px;
-}
-.cat-name {
-  font-family: var(--serif);
-  font-size: 26px;
-  font-weight: 400;
-  color: var(--text);
-  margin-bottom: 12px;
-}
-.cat-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  transition: color 0.2s;
-}
-.cat-card:hover .cat-cta { color: var(--bordo); }
-.cat-cta::after { content: '→'; transition: transform 0.2s; }
-.cat-card:hover .cat-cta::after { transform: translateX(4px); }
+.manifesto-text em { font-style: italic; color: var(--bordo); }
 
 /* PILLARS */
 .pillars {
@@ -608,110 +370,6 @@ nav.scrolled {
   line-height: 1.75;
   color: var(--text-muted);
 }
-
-/* TESTIMONIALS */
-.testimonials {
-  padding: 90px 80px;
-  border-top: 0.5px solid var(--border);
-  position: relative;
-  z-index: 1;
-}
-.testi-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2px;
-  background: var(--border);
-  margin-top: 48px;
-}
-.testi-card {
-  background: var(--cream);
-  padding: 36px;
-  transition: background 0.3s;
-}
-.testi-card:hover { background: var(--cream2); }
-.testi-stars {
-  font-size: 11px;
-  color: var(--bordo);
-  letter-spacing: 0.1em;
-  margin-bottom: 18px;
-}
-.testi-quote {
-  font-family: var(--serif);
-  font-size: 18px;
-  font-weight: 400;
-  font-style: italic;
-  line-height: 1.55;
-  color: var(--text);
-  margin-bottom: 24px;
-}
-.testi-author {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.testi-avatar {
-  width: 34px;
-  height: 34px;
-  border: 0.5px solid var(--border-strong);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
-  font-weight: 500;
-  color: var(--bordo);
-  flex-shrink: 0;
-  font-family: var(--sans);
-}
-.testi-name {
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text);
-}
-.testi-city {
-  font-size: 11px;
-  color: var(--text-dim);
-  margin-top: 2px;
-}
-
-/* NEWSLETTER */
-.newsletter {
-  padding: 90px 80px;
-  border-top: 0.5px solid var(--border);
-  background: var(--cream2);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  align-items: center;
-  position: relative;
-  z-index: 1;
-}
-.newsletter-body {
-  font-size: 14px;
-  line-height: 1.75;
-  color: var(--text-muted);
-  margin-top: 16px;
-}
-.newsletter-form {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-.newsletter-input {
-  background: var(--cream);
-  border: 0.5px solid var(--border-strong);
-  padding: 15px 20px;
-  color: var(--text);
-  font-family: var(--sans);
-  font-size: 13px;
-  letter-spacing: 0.03em;
-  outline: none;
-  transition: border-color 0.2s;
-  -webkit-appearance: none;
-}
-.newsletter-input::placeholder { color: var(--text-dim); }
-.newsletter-input:focus { border-color: var(--bordo); }
 
 /* FOOTER */
 footer {
@@ -791,63 +449,8 @@ footer {
 }
 .footer-copy { font-size: 11px; color: var(--text-dim); letter-spacing: 0.05em; }
 .footer-legal { display: flex; gap: 20px; flex-wrap: wrap; }
-.footer-legal a {
-  font-size: 11px;
-  color: var(--text-dim);
-  transition: color 0.2s;
-}
+.footer-legal a { font-size: 11px; color: var(--text-dim); transition: color 0.2s; }
 .footer-legal a:hover { color: var(--text-muted); }
-
-/* RESPONSIVE */
-@media (max-width: 900px) {
-  nav { padding: 14px 24px; }
-  .nav-links { display: none; }
-  .nav-actions { display: none; }
-  .hamburger { display: flex; }
-
-  .hero { grid-template-columns: 1fr; padding-top: 36px; }
-  .hero-left { padding: 100px 28px 60px; border-right: none; border-bottom: 0.5px solid var(--border); }
-  .hero-right { min-height: 340px; }
-  .hero-frame { width: 180px; height: 240px; }
-  .hero-frame-inner { width: 145px; height: 200px; }
-  .hero-frame-letter { font-size: 56px; }
-
-  .manifesto-inner { padding: 0 28px; grid-template-columns: 1fr; gap: 20px; }
-  .manifesto { padding: 70px 0; }
-
-  .categories { padding: 70px 28px; }
-  .cat-grid { grid-template-columns: 1fr; }
-  .cat-card { aspect-ratio: 4/3; }
-
-  .pillars { grid-template-columns: 1fr 1fr; }
-  .pillar { border-right: none; border-bottom: 0.5px solid var(--border); }
-  .pillar:nth-child(odd) { border-right: 0.5px solid var(--border); }
-  .pillar:last-child { border-bottom: none; }
-  .pillar:nth-last-child(2) { border-bottom: none; }
-
-  .testimonials { padding: 70px 28px; }
-  .testi-grid { grid-template-columns: 1fr; }
-
-  .newsletter { padding: 70px 28px; grid-template-columns: 1fr; gap: 36px; }
-
-  footer { padding: 50px 28px 32px; }
-  .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
-  .footer-bottom { flex-direction: column; align-items: flex-start; }
-}
-
-@media (max-width: 480px) {
-  .hero-left { padding: 90px 20px 50px; }
-  .hero-cta { flex-direction: column; align-items: flex-start; }
-  .btn-primary, .btn-ghost { width: 100%; text-align: center; }
-  .categories { padding: 60px 20px; }
-  .testimonials { padding: 60px 20px; }
-  .newsletter { padding: 60px 20px; }
-  footer { padding: 40px 20px 28px; }
-  .footer-top { grid-template-columns: 1fr; }
-  .pillars { grid-template-columns: 1fr; }
-  .pillar:nth-child(odd) { border-right: none; }
-  .section-header { flex-direction: column; align-items: flex-start; gap: 12px; }
-}
 
 /* REVEAL */
 .reveal {
@@ -855,12 +458,130 @@ footer {
   transform: translateY(20px);
   transition: opacity 0.7s ease, transform 0.7s ease;
 }
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ══════════════════════════════
+   RESPONSIVE
+══════════════════════════════ */
+@media (max-width: 900px) {
+  /* NAV */
+  nav {
+    top: 0 !important;
+    padding: 12px 20px !important;
+    background: rgba(245,240,232,0.97) !important;
+    border-bottom: 0.5px solid var(--border) !important;
+    backdrop-filter: blur(8px);
+  }
+  .nav-links { display: none; }
+  .nav-actions { display: none; }
+  .hamburger { display: flex; }
+
+  /* HERO */
+  .hero {
+    grid-template-columns: 1fr !important;
+    padding-top: 0 !important;
+    min-height: auto !important;
+  }
+  .hero-left {
+    padding: 40px 20px 40px !important;
+    border-right: none !important;
+    border-bottom: 0.5px solid var(--border);
+    order: 1;
+  }
+  .hero-right {
+    min-height: 280px !important;
+    order: 0;
+  }
+  .hero-right img { min-height: 280px !important; }
+
+  /* MANIFESTO */
+  .manifesto { padding: 56px 0 !important; }
+  .manifesto-inner {
+    padding: 0 20px !important;
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+
+  /* PILLARS */
+  .pillars { grid-template-columns: 1fr 1fr; }
+  .pillar { border-right: none; border-bottom: 0.5px solid var(--border); }
+  .pillar:nth-child(odd) { border-right: 0.5px solid var(--border); }
+  .pillar:last-child { border-bottom: none; }
+  .pillar:nth-last-child(2) { border-bottom: none; }
+
+  /* FOOTER */
+  footer { padding: 40px 20px 28px !important; }
+  .footer-top { grid-template-columns: 1fr 1fr !important; gap: 24px !important; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; gap: 10px; }
+}
+
+@media (max-width: 480px) {
+  nav { padding: 10px 16px !important; }
+
+  .hero-left { padding: 32px 16px 36px !important; }
+  .hero-title { font-size: 38px !important; }
+  .hero-slogan { font-size: 15px !important; }
+  .hero-cta { flex-direction: column; width: 100%; }
+  .btn-primary, .btn-ghost { width: 100%; text-align: center; }
+
+  .manifesto-text { font-size: 22px !important; }
+
+  .pillars { grid-template-columns: 1fr !important; }
+  .pillar { border-right: none !important; }
+
+  .footer-top { grid-template-columns: 1fr !important; }
+}
+
+/* WHATSAPP FLOTANTE */
+.wa-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  text-decoration: none;
+}
+.wa-float-bubble {
+  background: #fff;
+  color: #1a1410;
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  padding: 8px 14px;
+  border-radius: 20px 20px 4px 20px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(8px);
+  transition: opacity 0.3s, transform 0.3s;
+  pointer-events: none;
+}
+.wa-float:hover .wa-float-bubble { opacity: 1; transform: translateX(0); }
+.wa-float-btn {
+  width: 52px;
+  height: 52px;
+  background: #25D366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(37,211,102,0.35);
+  transition: transform 0.2s, box-shadow 0.2s;
+  flex-shrink: 0;
+}
+.wa-float:hover .wa-float-btn { transform: scale(1.08); box-shadow: 0 6px 28px rgba(37,211,102,0.45); }
+.wa-float-btn svg { width: 26px; height: 26px; fill: #fff; }
+@media (max-width: 480px) {
+  .wa-float { bottom: 16px; right: 16px; }
+  .wa-float-btn { width: 48px; height: 48px; }
+  .wa-float-bubble { display: none; }
 }
 </style>
 </head>
+
 <body>
 
 <!-- MOBILE MENU -->
@@ -868,8 +589,8 @@ footer {
   <a href="index.html" onclick="closeMobileMenu()">Inicio</a>
   <a href="coleccion.html" onclick="closeMobileMenu()">Colección</a>
   <a href="nosotros.html" onclick="closeMobileMenu()">Nosotros</a>
+  <a href="carrito.html" class="mobile-cart-link" onclick="closeMobileMenu()">Carrito (<span id="mobile-cart-count">0</span>)</a>
   <div class="mobile-menu-slogan">Solos y de noche</div>
-  <a href="carrito.html" onclick="closeMobileMenu()" style="font-family:var(--sans);font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted);">Carrito</a>
 </div>
 
 <!-- TICKER -->
@@ -895,8 +616,7 @@ footer {
     <li><a href="nosotros.html">Nosotros</a></li>
   </ul>
   <div class="nav-actions">
-    <button class="nav-btn">Buscar</button>
-    <button class="nav-cart" onclick="toggleCart()">Carrito — <span id="cart-count">0</span></button>
+    <button class="nav-cart" onclick="window.location.href='carrito.html'">Carrito — <span id="cart-count">0</span></button>
   </div>
   <button class="hamburger" id="hamburger" aria-label="Menú" onclick="toggleMenu()">
     <span></span><span></span><span></span>
@@ -912,15 +632,10 @@ footer {
     <div class="hero-cta">
       <a href="coleccion.html"><button class="btn-primary">Elegí tu banda</button></a>
     </div>
-    <!--<div class="scroll-hint">
-      <div class="scroll-line"></div>
-      Scrollear
-    </div>-->
   </div>
   <div class="hero-right">
-    <div class="hero-visual" style="padding:0;position:relative;overflow:hidden;">
-      <!-- REEMPLAZAR src con tu imagen: <img src="TU_IMAGEN.jpg" ...> -->
-      <img src="Maradona_oktubre.png" alt="LUZBELITO" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;min-height:500px;">
+    <div style="width:100%;height:100%;position:relative;overflow:hidden;">
+      <img src="Maradona_oktubre.png" alt="LUZBELITO" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;min-height:280px;">
       <div style="position:absolute;inset:0;background:linear-gradient(to right, rgba(245,240,232,0.18) 0%, transparent 40%);pointer-events:none;"></div>
       <div style="position:absolute;bottom:24px;right:24px;background:var(--bordo);color:var(--cream);padding:10px 16px;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;font-weight:500;font-family:var(--sans);">Disponible ahora</div>
     </div>
@@ -940,61 +655,6 @@ footer {
   </div>
 </section>
 
-<!-- CATEGORIES 
-<section class="categories">
-  <div class="section-header">
-    <h2 class="section-title">Nuestras <em>categorías</em></h2>
-    <a href="#" class="section-link">Ver todo</a>
-  </div>
-  <div class="cat-grid">
-    <div class="cat-card reveal">
-      <div class="cat-geo">
-        <svg viewBox="0 0 200 200" fill="none" stroke="var(--bordo)" stroke-width="0.8">
-          <rect x="30" y="30" width="140" height="140"></rect>
-          <rect x="55" y="55" width="90" height="90"></rect>
-          <line x1="30" y1="30" x2="170" y2="170"></line>
-          <line x1="170" y1="30" x2="30" y2="170"></line>
-        </svg>
-      </div>
-      <div class="cat-content">
-        <div class="cat-eyebrow">01 — Argentina</div>
-        <div class="cat-name">Rock Nacional</div>
-        <span class="cat-cta">Explorar</span>
-      </div>
-    </div>
-    <div class="cat-card reveal">
-      <div class="cat-geo">
-        <svg viewBox="0 0 200 200" fill="none" stroke="var(--bordo)" stroke-width="0.8">
-          <circle cx="100" cy="100" r="70"></circle>
-          <circle cx="100" cy="100" r="45"></circle>
-          <circle cx="100" cy="100" r="20"></circle>
-          <line x1="100" y1="30" x2="100" y2="170"></line>
-          <line x1="30" y1="100" x2="170" y2="100"></line>
-        </svg>
-      </div>
-      <div class="cat-content">
-        <div class="cat-eyebrow">02 — Internacional</div>
-        <div class="cat-name">Rock Clásico</div>
-        <span class="cat-cta">Explorar</span>
-      </div>
-    </div>
-    <div class="cat-card reveal">
-      <div class="cat-geo">
-        <svg viewBox="0 0 200 200" fill="none" stroke="var(--bordo)" stroke-width="0.8">
-          <polygon points="100,25 175,170 25,170"></polygon>
-          <polygon points="100,60 152,160 48,160"></polygon>
-          <polygon points="100,95 130,150 70,150"></polygon>
-        </svg>
-      </div>
-      <div class="cat-content">
-        <div class="cat-eyebrow">03 — Especial</div>
-        <div class="cat-name">Edición Limitada</div>
-        <span class="cat-cta">Explorar</span>
-      </div>
-    </div>
-  </div>
-</section>
--->
 <!-- PILLARS -->
 <section class="pillars">
   <div class="pillar reveal">
@@ -1019,48 +679,6 @@ footer {
   </div>
 </section>
 
-<!-- TESTIMONIALS 
-<section class="testimonials">
-  <div class="section-header">
-    <h2 class="section-title">Lo que dicen <em>nuestros clientes</em></h2>
-  </div>
-  <div class="testi-grid">
-    <div class="testi-card reveal">
-      <div class="testi-stars">★★★★★</div>
-      <p class="testi-quote">"Compré con duda al principio, pero todo perfecto. El envío llegó antes de lo esperado."</p>
-      <div class="testi-author">
-        <div class="testi-avatar">NP</div>
-        <div>
-          <div class="testi-name">Nicolás P.</div>
-          <div class="testi-city">Rosario</div>
-        </div>
-      </div>
-    </div>
-    <div class="testi-card reveal">
-      <div class="testi-stars">★★★★★</div>
-      <p class="testi-quote">"El diseño es increíble, se nota la calidad. Me preguntaron dónde la compré todo el fin de semana."</p>
-      <div class="testi-author">
-        <div class="testi-avatar">SR</div>
-        <div>
-          <div class="testi-name">Sofía R.</div>
-          <div class="testi-city">Córdoba</div>
-        </div>
-      </div>
-    </div>
-    <div class="testi-card reveal">
-      <div class="testi-stars">★★★★★</div>
-      <p class="testi-quote">"La estampa es tal cual se ve en la foto. Llegó rápido y bien embalado. Sin dudas vuelvo."</p>
-      <div class="testi-author">
-        <div class="testi-avatar">MP</div>
-        <div>
-          <div class="testi-name">Mateo P.</div>
-          <div class="testi-city">Buenos Aires</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
--->
 <!-- FOOTER -->
 <footer>
   <div class="footer-top">
@@ -1102,8 +720,18 @@ footer {
   </div>
 </footer>
 
+<!-- WHATSAPP FLOTANTE -->
+<a class="wa-float" href="https://wa.me/5493541608308" target="_blank" rel="noopener" aria-label="Contactar por WhatsApp">
+  <span class="wa-float-bubble">¡Hablanos por WhatsApp!</span>
+  <span class="wa-float-btn">
+    <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+      <path d="M16.002 2C8.28 2 2 8.28 2 16c0 2.478.655 4.8 1.8 6.808L2 30l7.394-1.77A13.94 13.94 0 0016.002 30C23.72 30 30 23.72 30 16S23.72 2 16.002 2zm0 25.5a11.44 11.44 0 01-5.836-1.6l-.418-.248-4.39 1.05 1.077-4.274-.272-.437A11.46 11.46 0 014.5 16c0-6.348 5.154-11.5 11.502-11.5S27.5 9.652 27.5 16 22.35 27.5 16.002 27.5zm6.29-8.59c-.345-.172-2.04-1.006-2.356-1.12-.316-.115-.546-.172-.776.172-.23.345-.89 1.12-1.09 1.35-.2.23-.4.258-.745.086-.345-.172-1.456-.537-2.773-1.712-1.025-.916-1.716-2.047-1.917-2.392-.2-.345-.022-.531.15-.703.155-.155.345-.403.518-.604.172-.2.23-.345.345-.575.115-.23.057-.432-.029-.604-.086-.172-.776-1.87-1.063-2.56-.28-.672-.563-.58-.776-.59l-.66-.011c-.23 0-.604.086-.92.432-.316.345-1.207 1.178-1.207 2.874 0 1.696 1.235 3.334 1.407 3.564.172.23 2.43 3.71 5.888 5.204.823.355 1.465.567 1.965.726.826.263 1.578.226 2.172.137.662-.099 2.04-.834 2.328-1.638.287-.804.287-1.493.2-1.638-.086-.144-.316-.23-.66-.402z"/>
+    </svg>
+  </span>
+</a>
+
 <script>
-  // Nav scroll
+  // Nav scroll (solo aplica en desktop donde el nav empieza en top:36px)
   const nav = document.getElementById('mainNav');
   window.addEventListener('scroll', () => {
     nav.classList.toggle('scrolled', window.scrollY > 60);
@@ -1134,220 +762,18 @@ footer {
     });
   }, { threshold: 0.08 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-</script>
-<style>
-/* ── RESPONSIVE FIXES ── */
 
-/* Fix: en mobile el nav tiene top: 36px (ticker height ≈36px).
-   El hero necesita más padding-top para no quedar tapado */
-@media (max-width: 900px) {
-  nav {
-    top: 0 !important;      /* nav sticky desde el top cuando el ticker scrollea */
-    padding: 12px 20px !important;
-  }
-
-  /* Hero: columna única, mejor padding */
-  .hero {
-    grid-template-columns: 1fr !important;
-    padding-top: 0 !important;
-    min-height: auto !important;
-  }
-  .hero-left {
-    padding: 40px 20px 40px !important;
-    border-right: none !important;
-    border-bottom: 0.5px solid var(--border);
-    order: 1;
-  }
-  .hero-right {
-    min-height: 260px !important;
-    order: 0;           /* imagen arriba en mobile */
-  }
-  .hero-right img {
-    min-height: 260px !important;
-  }
-
-  /* Manifesto */
-  .manifesto-inner {
-    padding: 0 20px !important;
-    grid-template-columns: 1fr !important;
-    gap: 14px !important;
-  }
-  .manifesto { padding: 56px 0 !important; }
-
-  /* Categories */
-  .categories { padding: 56px 20px !important; }
-  .cat-card { aspect-ratio: 16/9 !important; }
-
-  /* Testimonials */
-  .testimonials { padding: 56px 20px !important; }
-
-  /* Newsletter */
-  .newsletter {
-    padding: 56px 20px !important;
-    grid-template-columns: 1fr !important;
-    gap: 28px !important;
-  }
-
-  /* Footer */
-  footer { padding: 40px 20px 28px !important; }
-  .footer-top { grid-template-columns: 1fr 1fr !important; gap: 24px !important; }
-  .footer-bottom { flex-direction: column; align-items: flex-start; gap: 10px; }
-}
-
-@media (max-width: 480px) {
-  nav { padding: 10px 16px !important; }
-
-  .hero-left { padding: 32px 16px 36px !important; }
-  .hero-title { font-size: 38px !important; }
-  .hero-slogan { font-size: 15px !important; }
-  .hero-body { font-size: 13px !important; }
-  .hero-cta { flex-direction: column; width: 100%; }
-  .btn-primary, .btn-ghost { width: 100%; text-align: center; }
-
-  .manifesto-text { font-size: 22px !important; }
-
-  .section-header { flex-direction: column; align-items: flex-start; gap: 10px; }
-
-  .pillars { grid-template-columns: 1fr !important; }
-  .pillar { border-right: none !important; }
-
-  .testi-grid { grid-template-columns: 1fr !important; }
-
-  .footer-top { grid-template-columns: 1fr !important; }
-
-  .newsletter-input { font-size: 16px !important; } /* evita zoom en iOS */
-}
-
-/* ── CART POPUP (mobile visible) ── */
-.cart-popup {
-  position: fixed !important;
-  /* En PC: arriba izquierda bajo el nav */
-  top: 80px;
-  left: 24px;
-  right: auto;
-  transform: none !important;
-  z-index: 9999;
-  background: var(--bordo);
-  color: var(--cream);
-  padding: 14px 20px;
-  font-family: var(--sans);
-  font-size: 12px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s, transform 0.3s;
-  min-width: 220px;
-  box-shadow: 0 8px 32px rgba(107,26,42,0.25);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.cart-popup.show {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(4px) !important;
-}
-.cart-popup::before {
-  content: '✓';
-  font-size: 14px;
-  font-weight: 700;
-  flex-shrink: 0;
-}
-
-@media (max-width: 900px) {
-  .cart-popup {
-    top: auto !important;
-    bottom: 90px !important;   /* encima del botón WhatsApp */
-    left: 16px !important;
-    right: 16px !important;
-    min-width: 0 !important;
-    text-align: center;
-    justify-content: center;
-    font-size: 11px;
-  }
-}
-
-/* ── WHATSAPP FLOTANTE ── */
-.wa-float {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 9998;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  cursor: pointer;
-  text-decoration: none;
-}
-.wa-float-bubble {
-  background: #fff;
-  color: #1a1410;
-  font-family: var(--sans);
-  font-size: 11px;
-  letter-spacing: 0.06em;
-  padding: 8px 14px;
-  border-radius: 20px 20px 4px 20px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.12);
-  white-space: nowrap;
-  opacity: 0;
-  transform: translateX(8px);
-  transition: opacity 0.3s, transform 0.3s;
-  pointer-events: none;
-}
-.wa-float:hover .wa-float-bubble {
-  opacity: 1;
-  transform: translateX(0);
-}
-.wa-float-btn {
-  width: 52px;
-  height: 52px;
-  background: #25D366;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 20px rgba(37,211,102,0.35);
-  transition: transform 0.2s, box-shadow 0.2s;
-  flex-shrink: 0;
-}
-.wa-float:hover .wa-float-btn {
-  transform: scale(1.08);
-  box-shadow: 0 6px 28px rgba(37,211,102,0.45);
-}
-.wa-float-btn svg {
-  width: 26px;
-  height: 26px;
-  fill: #fff;
-}
-
-@media (max-width: 480px) {
-  .wa-float { bottom: 16px; right: 16px; }
-  .wa-float-btn { width: 48px; height: 48px; }
-  .wa-float-bubble { display: none; } /* en mobile solo el botón */
-}
-</style>
-
-<!-- WHATSAPP FLOTANTE -->
-<a class="wa-float" href="https://wa.me/5493541608308" target="_blank" rel="noopener" aria-label="Contactar por WhatsApp">
-  <span class="wa-float-bubble">¡Hablanos por WhatsApp!</span>
-  <span class="wa-float-btn">
-    <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-      <path d="M16.002 2C8.28 2 2 8.28 2 16c0 2.478.655 4.8 1.8 6.808L2 30l7.394-1.77A13.94 13.94 0 0016.002 30C23.72 30 30 23.72 30 16S23.72 2 16.002 2zm0 25.5a11.44 11.44 0 01-5.836-1.6l-.418-.248-4.39 1.05 1.077-4.274-.272-.437A11.46 11.46 0 014.5 16c0-6.348 5.154-11.5 11.502-11.5S27.5 9.652 27.5 16 22.35 27.5 16.002 27.5zm6.29-8.59c-.345-.172-2.04-1.006-2.356-1.12-.316-.115-.546-.172-.776.172-.23.345-.89 1.12-1.09 1.35-.2.23-.4.258-.745.086-.345-.172-1.456-.537-2.773-1.712-1.025-.916-1.716-2.047-1.917-2.392-.2-.345-.022-.531.15-.703.155-.155.345-.403.518-.604.172-.2.23-.345.345-.575.115-.23.057-.432-.029-.604-.086-.172-.776-1.87-1.063-2.56-.28-.672-.563-.58-.776-.59l-.66-.011c-.23 0-.604.086-.92.432-.316.345-1.207 1.178-1.207 2.874 0 1.696 1.235 3.334 1.407 3.564.172.23 2.43 3.71 5.888 5.204.823.355 1.465.567 1.965.726.826.263 1.578.226 2.172.137.662-.099 2.04-.834 2.328-1.638.287-.804.287-1.493.2-1.638-.086-.144-.316-.23-.66-.402z"/>
-    </svg>
-  </span>
-</a>
-
-<script>
-// ── Actualizar contador carrito desde localStorage ──
-(function updateCartCount() {
-  try {
-    var carrito = JSON.parse(localStorage.getItem('luzbelito_carrito')) || [];
-    var total = carrito.reduce(function(s, i) { return s + (i.cantidad || 1); }, 0);
-    var btn = document.querySelector('.nav-cart');
-    if (btn) btn.textContent = total > 0 ? 'Carrito (' + total + ')' : 'Carrito — 0';
-  } catch(e) {}
-})();
+  // Contador carrito desde localStorage
+  (function updateCartCount() {
+    try {
+      var carrito = JSON.parse(localStorage.getItem('luzbelito_carrito')) || [];
+      var total = carrito.reduce(function(s, i) { return s + (i.cantidad || 1); }, 0);
+      var countEl = document.getElementById('cart-count');
+      var mobileCountEl = document.getElementById('mobile-cart-count');
+      if (countEl) countEl.textContent = total;
+      if (mobileCountEl) mobileCountEl.textContent = total;
+    } catch(e) {}
+  })();
 </script>
 
 </body>
